@@ -1,0 +1,50 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Token;
+
+
+public class ParserException
+    extends Exception
+{
+//Domain Implementation
+    <a name="token"/>
+    protected Token token = null;
+
+//Constructors
+    <a name="TokenConstructor"/>
+    public ParserException(Token token)
+    {
+        this.token = token;
+    }
+
+    <a name="StringConstructor"/>
+    public ParserException(String str)
+    {
+        super(str);
+    }
+
+//Queries
+    <a name="getToken"/>
+    public Token getToken()
+    {
+        return token;
+    }
+
+    <a name="toString"/>
+    public String toString()
+    {
+        String result = null;
+        if(token == null){
+            result = getMessage();
+        } else {
+            result = "Parser Error for " + token.toString();
+        };
+        return result;
+    }
+}
+</pre>
+</body>
+</html>

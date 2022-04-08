@@ -1,0 +1,48 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Lex;
+
+
+public class Project3
+{
+//Domain Implementation
+    <a name="datalogProgram"/>
+    public static DatalogProgram datalogProgram = null;
+//Main Routine
+    <a name="main"/>
+    public static void main(String[] args)
+    {
+        System.out.println(body(args));
+    }
+
+    <a name="body"/>
+    public static String body(String[] args)
+    {
+        String result = null;
+        try{
+            Lex lex = null;
+            if(args.length == 0){
+                lex = new Lex();
+            } else {
+                lex = new Lex(args[0]);
+            };
+        
+            datalogProgram = new DatalogProgram(lex);
+            StringBuffer strBuffer = new StringBuffer();
+            datalogProgram.evaluateQueryList(strBuffer);
+            result = strBuffer.toString();
+        }catch(ParserException p){
+            result = p == null ? null : p.toString();   
+            System.out.println(p);
+        }catch(Exception p){
+            result = p == null ? null : p.toString();   
+        };
+        return result;
+    }
+}
+</pre>
+</body>
+</html>

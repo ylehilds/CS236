@@ -1,0 +1,61 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import lex.Lex;
+import lex.TokenType;
+
+
+public class FactList
+    extends DatalogSegment
+{
+//Domain Implementation
+//  ArrayList<Node> nodes; -- implements Sequence<Fact>
+//                         -- inherited from List through DatalogSegment.
+
+//Constructors
+    <a name="LexConstructor"/>
+    public FactList(Lex lex)
+        throws ParserException
+    {
+        super(lex, TokenType.FACTS); 
+    }
+
+//Queries
+    <a name="canProve"/>
+    public boolean canProve(Predicate predicate)
+    {
+        boolean result = false;
+        Iterator<Node> iter = nodes.iterator();
+        while(!result && iter.hasNext()){
+            Fact fact = (Fact)iter.next();
+            result = fact.equals(predicate);
+        };
+        return result;
+    }
+
+//Commands
+
+//Auxillary Methods and Constants
+    // Methods defined in List that need to be overridden here.
+
+    <a name="canProve"/>
+    public Node createNode(Lex lex)
+        throws ParserException
+    {
+        return new Fact(lex);
+    }
+
+    <a name="getLengthConstraint"/>
+    protected LengthConstraint getLengthConstraint()
+    {
+        return LengthConstraint.ZERO_OR_MORE;
+    }
+}
+</pre>
+</body>
+</html>

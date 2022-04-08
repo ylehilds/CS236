@@ -1,0 +1,14 @@
+Schemes:
+   employee(N,I,A,J)
+   WhoToBlame(N,J)
+Facts:
+   employee('Dilbert','51','10 Main','EE').
+   employee('Dilbert','51','10 Main','Marketing').
+   employee('Dogbert','52','10 Main','EE').
+   employee('PHB','53','Hades','Pain Management').
+   WhoToBlame('Dilbert','EE').
+Rules:
+Queries:
+   WhoToBlame('Dilbert',Job)?
+   WhoToBlame(Name,'EE')?
+   employee(Name,Id,Address,'EE')?

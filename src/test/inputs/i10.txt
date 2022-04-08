@@ -1,0 +1,23 @@
+Schemes:
+   f(A,B)
+   g(C,D)
+   r(E,F)
+
+Facts:
+   f('1','2').
+   f('4','3').
+   g('3','2').
+   r('3','5').
+
+Rules:
+   r(E,F):-f(E,F).
+   r(E,F):-f(F,E).
+   g(C,D):-f(C,X),r(X,D).
+
+Queries:
+   f(A,B)?
+   g(A,B)?
+   r(A,B)?
+   g('4',B)?
+   r(E,'3')? 
+   g('3','1')?

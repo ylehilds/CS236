@@ -1,0 +1,84 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Lex;
+import lex.TokenType;
+
+
+public class DatalogProgram
+    extends Node
+{
+//Domain Implementation
+    <a name="schemeList"/>
+    protected SchemeList schemeList;
+
+    <a name="factList"/>
+    protected FactList factList;
+
+    <a name="ruleList"/>
+    protected RuleList ruleList;
+
+    <a name="queryList"/>
+    protected QueryList queryList;
+
+//Constructors
+    <a name="LexConstructor"/>
+    public DatalogProgram(Lex lex)
+        throws ParserException
+    {
+        Domain.reset();
+        schemeList = new SchemeList(lex);
+        factList = new FactList(lex);
+        ruleList = new RuleList(lex);
+        queryList = new QueryList(lex);
+
+        checkFor(lex, TokenType.EOF);
+    }
+
+//Queries
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+        result.append(schemeList.toString());
+        result.append(factList.toString());
+        result.append(ruleList.toString());
+        result.append(queryList.toString());
+        return result.toString();
+    }
+
+    <a name="getFactList"/>
+    public FactList getFactList()
+    {
+        return factList;
+    }
+
+    <a name="getRuleList"/>
+    public RuleList getRuleList()
+    {
+        return ruleList;
+    }
+
+    <a name="getQueryList"/>
+    public QueryList getQueryList()
+    {
+        return queryList;
+    }
+
+
+//Commands
+    <a name="evaluateQueryList"/>
+    public void evaluateQueryList(StringBuffer strBuffer)
+        throws Exception
+    {
+        assert strBuffer != null;
+        queryList.evaluate(strBuffer);
+    }
+
+//Auxillary Methods and Constants
+}
+</pre>
+</body>
+</html>

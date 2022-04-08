@@ -1,0 +1,53 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+import lex.Constant;
+
+
+public class Locations
+{
+//Domain Implementation
+    <a name="locations"/>
+    protected HashSet<Location> locations = null;
+
+//Constructors
+    <a name="DefaultConstructor"/>
+    public Locations()
+    {
+        locations = new HashSet<Location>();
+    }
+
+    <a name="CopyConstructor"/>
+    public Locations(Locations locs)
+    {
+        if(locs == null){
+            locations = new HashSet<Location>();
+        } else {
+            locations = new HashSet<Location>(locs.locations);
+        };
+    }
+
+//Queries
+    <a name="iterator"/>
+    public Iterator<Location> iterator()
+    {
+        return locations.iterator();
+    }
+
+//Commands
+    <a name="addLocation"/>
+    public void addLocation(Location location)
+    {
+        assert location != null;
+
+        locations.add(location);
+    }
+}
+</pre>
+</body>
+</html>

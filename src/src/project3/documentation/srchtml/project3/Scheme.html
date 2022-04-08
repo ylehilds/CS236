@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Lex;
+import lex.TokenType;
+
+import lex.Identifier;
+
+
+public class Scheme
+    extends NamedList
+{
+//Domain Implementation
+//  Identifier name       -- inherited from NamedList, impliments attributeName
+//  ArrayList<Node> nodes -- inherited from List through NamedList,
+//                        -- implements attributeList
+
+//Constructors
+    <a name="LexConstructor"/>
+    public Scheme(Lex lex)
+        throws ParserException
+    {
+        super(lex);
+
+        boolean allUnique = true;
+        for(int i = 0; allUnique && i < nodes.size()-1; i++){
+            for(int j = i + 1; allUnique && j < nodes.size(); j++){
+                allUnique = ! (nodes.get(i).equals(nodes.get(j)));
+            };
+        };
+        if(!allUnique)
+            throw new ParserException(
+               "ERROR in Scheme::Scheme(Lex)\n" +
+               "    All of the identifiers in the scheme declaration must " +
+               "be unique.");
+    }
+
+//Queries
+
+//Commands
+
+//Auxillary Methods and Constants
+    //Methods defined in List that are overridden to define a Scheme.
+
+    <a name="createNode"/>
+    protected Node createNode(Lex lex)
+        throws ParserException
+    {
+        return checkFor(lex, TokenType.ID);
+    }
+}
+</pre>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<html>
+<body>
+<pre>
+package lex;
+
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.StringReader;
+
+
+public class File
+{
+//Constants
+    
+    public static final char EOF = (char)-1;
+
+//Domain Implementation
+    // The domain is implemented as an input stream, "is", that holds
+    // ther characters of s, s[1..|s|-1]. The domain also contains a single
+    // character buffer, "c", that holds the character s[0].  It is possible for
+    // "is" to be empty, but, "c" will always hold some character, even if it is
+    // the File.EOF character. The domain also implements the lineNumber as an
+    // integer.
+
+    <a name="is"/>
+    protected BufferedReader is = null;
+
+    <a name="c"/>
+    protected char c = '\0';
+
+    <a name="lineNumber"/>
+    protected int lineNumber = 1;
+
+//Constructors
+    <a name="defaultConstructor"/>
+    public File()
+    {
+        is = new BufferedReader(new InputStreamReader(System.in));
+        popFront();
+        lineNumber = 1;
+    }
+
+    <a name="StdConstructor"/>
+    public File(String fileName)
+    {
+        try{
+            is = new BufferedReader(new FileReader(fileName));
+        }catch(IOException e){
+            is = new BufferedReader(new InputStreamReader(System.in));
+        };
+        popFront();
+        lineNumber = 1;
+    }
+
+    <a name="TestConstructor"/>
+    public File(StringReader stringReader)
+    {
+        if(stringReader == null){
+            is = new BufferedReader(new InputStreamReader(System.in));
+        } else {
+            is = new BufferedReader(stringReader);
+        };
+        popFront(); //initializes "c" with the first character of the input file
+        lineNumber = 1;
+    }
+
+//Query
+    <a name="front"/>
+    public char front()
+    {
+        return c;
+    }
+
+    <a name="lineNumber"/>
+    public int getLineNumber()
+    {
+        return lineNumber;
+    }
+
+//Command
+    <a name="popFront"/>
+    public void popFront()
+    {
+        if(c == '\n'){
+           lineNumber++;
+        };
+
+        if(c != EOF){
+            try{
+                c = (char)is.read();
+            }catch(IOException e){
+                c = EOF;
+            };
+        };
+    }
+}
+</pre>
+</body>
+</html>

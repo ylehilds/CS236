@@ -1,0 +1,34 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Lex;
+import lex.Token;
+import lex.TokenType;
+
+
+abstract public class Node
+{
+    <a name="checkFor"/>
+    public Token checkFor(Lex lex, TokenType expectedTokenType)
+        throws ParserException
+    {
+        assert lex != null;
+
+        Token result = null;
+ 
+        if(expectedTokenType == null){
+           //do nothing
+        } else if(lex.front().getTokenType() == expectedTokenType){
+            result = lex.front();
+            lex.popFront();
+        } else {
+            throw new ParserException(lex.front());
+        };
+        return result;
+    }
+}
+</pre>
+</body>
+</html>

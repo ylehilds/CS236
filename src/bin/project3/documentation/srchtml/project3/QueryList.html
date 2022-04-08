@@ -1,0 +1,60 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Lex;
+import lex.TokenType;
+
+
+public class QueryList
+    extends DatalogSegment
+{
+//Domain Implementation
+//  ArrayList<Nodes> nodes; -- implements Sequence<Query>
+//                          -- inherited from List through DatalogSegment.
+
+//Constructors
+    <a name="LexConstructor"/>
+    public QueryList(Lex lex)
+        throws ParserException
+    {
+        super(lex, TokenType.QUERIES);
+    }
+
+//Queries
+    <a name="evaluate"/>
+    public void evaluate(StringBuffer strBuffer)
+        throws Exception
+    {
+        assert strBuffer != null;
+
+        for(Node node : nodes){
+            Query query = (Query)node;
+            query.evaluate(strBuffer);
+        };
+    }
+
+    <a name="getQuery"/>
+    public Query getQuery(int i)
+    {
+        assert i >= 0 && i < nodes.size();
+
+        return (Query)nodes.get(i);
+    }
+
+//Commands
+
+//Auxillary Methods and Constants
+    // Methods defined in List that need to be overridden here.
+
+    <a name="createNode"/>
+    protected Node createNode(Lex lex)
+        throws ParserException
+    {
+        return new Query(lex);
+    }
+}
+</pre>
+</body>
+</html>

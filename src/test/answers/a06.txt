@@ -1,0 +1,24 @@
+snap(S,'Snoopy',A,P)? Yes(1)
+S = '33333',   A = '12 Apple',   P = '555-1234'
+csg(Course,'33333',Grade)? Yes(2)
+Course = 'EE200',  Grade = 'B'
+Course = 'CS101',   Grade = 'A-'
+cr('CS101','Auditorium')? Yes(1)
+cdh('EE200','F',Hour)? No
+csg(Course,Id,Grade)? Yes(7)
+   Id = '67890', Course = 'CS101', Grade = 'B'
+   Id = '67890', Course = 'PH100', Grade = 'C+'
+   Id = '12345', Course = 'EE200', Grade = 'C'
+   Id = '12345', Course = 'CS101', Grade = 'A'
+   Id = '33333', Course = 'EE200', Grade = 'B'
+   Id = '33333', Course = 'CS101', Grade = 'A-'
+   Id = '22222', Course = 'EE200', Grade = 'B+'
+cdh(Course,Day,Hour)? Yes(4)
+  Day = 'M', Course = 'EE200', Hour = '10AM'
+  Day = 'Tu', Course = 'PH100', Hour = '11AM'
+  Day = 'F', Course = 'CS101', Hour = '9PM'
+  Day = 'W', Course = 'EE200', Hour = '10AM'
+cr(Course,Room)? Yes(3)
+  Course = 'EE200',   Room = '25 Ohm Hall'
+  Course = 'CS101',   Room = 'Auditorium'
+  Course = 'PH100',   Room = 'Newton Lab'

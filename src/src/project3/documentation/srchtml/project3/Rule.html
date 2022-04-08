@@ -1,0 +1,66 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.HashMap;
+
+import lex.Constant;
+import lex.Identifier;
+import lex.Lex;
+import lex.TokenType;
+
+
+public class Rule
+    extends Node
+{
+//Domain Implementation
+    <a name="head"/>
+    protected Head head;
+
+    <a name="tail"/>
+    protected PredicateList tail;
+    
+//Constructors
+    <a name="LexConstructor"/>
+    public Rule(Lex lex)
+        throws ParserException
+    {
+        head = new Head(lex);
+        checkFor(lex, TokenType.COLON_DASH);
+        tail = new PredicateList(lex);
+        checkFor(lex, TokenType.PERIOD);
+    }
+
+//Queries
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+        result.append(head.toString());
+        result.append(":-");
+        result.append(tail.toString());
+        result.append(".");
+        return result.toString();
+    }
+
+    <a name="prove"/>
+    public boolean prove(Predicate predicate)
+        throws ParserException
+    {
+         assert predicate != null;
+
+         boolean result = false;
+         if(head.matches(predicate)){
+             PredicateList predicateList = new PredicateList(tail);
+             predicateList.setVariables(head.unify(predicate));
+             result = predicateList.evaluate();
+         };
+         return result;
+    }
+
+//Commands
+}
+</pre>
+</body>
+</html>

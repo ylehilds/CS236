@@ -1,0 +1,64 @@
+<html>
+<body>
+<pre>
+package project3;
+
+
+public class Location
+{
+//Domain Implementation
+    <a name="predicateIndex"/>
+    protected int predicateIndex;
+
+    <a name="locationInPredicate"/>
+    protected int locationInPredicate;
+
+//Constructors
+    <a name="StandardConstructor"/>
+    public Location(int predicateIndex, int locationInPredicate)
+    {
+         assert predicateIndex >= 0 && locationInPredicate >= 0;
+         this.predicateIndex = predicateIndex;
+         this.locationInPredicate = locationInPredicate;
+    }
+
+//Queries
+    <a name="getPredicateIndex"/>
+    public int getPredicateIndex()
+    {
+        return predicateIndex;
+    }
+
+    <a name="getLocationInPredicate"/>
+    public int getLocationInPredicate()
+    {
+        return locationInPredicate;
+    }
+
+    <a name="equals"/>
+    public boolean equals(Object o)
+    {
+        boolean result = o != null && o instanceof Location;
+        if(result){
+            Location location = (Location)o;
+            result = predicateIndex == location.predicateIndex &&
+                     locationInPredicate == location.locationInPredicate;
+        };
+        return result;
+    }
+
+    <a name="hashCode"/>
+    public int hashCode()
+    {
+        return predicateIndex * OFFSET + locationInPredicate;
+    }
+
+//Commands
+
+//Auxillary Constants and Methods
+    <a name="offset"/>
+    private final int OFFSET = 73;
+}
+</pre>
+</body>
+</html>

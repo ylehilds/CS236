@@ -1,0 +1,171 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import lex.Identifier;
+import lex.Lex;
+import lex.Token;
+import lex.TokenType;
+
+
+
+abstract public class List
+    extends Node
+{
+// Domain Implementation
+    <a name="nodes"/>
+    protected ArrayList<Node> nodes;
+
+//Constructors
+    <a name="DefaultConstructor"/>
+    public List()
+    {
+        nodes = new ArrayList<Node>();
+    }
+
+    <a name="CopyConstructor"/>
+    public List(List list)
+    {
+        nodes = new ArrayList<Node>(list.nodes);
+    }
+
+    <a name="LexConstructor"/>
+    public void createList(Lex lex)
+        throws ParserException
+    {
+        if(lex == null)throw new ParserException(
+            "ERROR in List::createList(Lex)\n" +
+            "    lex cannot be null");
+          
+        nodes = new ArrayList<Node>();
+        boolean anotherNode = checkForFirstMemberOfTheList(lex);
+        while(anotherNode){
+            nodes.add(createNode(lex));
+            anotherNode = checkForAnotherMemberOfTheList(lex);
+        };
+    }
+
+//Queries
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+        for(int i = 0; i < nodes.size(); i++){
+            result.append(nodes.get(i).toString());
+            if(i < nodes.size() - 1){
+                Token token = getSeparator();
+                result.append(token == null ? "" : token.getValue());
+            };
+        };
+        return result.toString();
+    }
+
+    <a name="getNodes"/>
+    public ArrayList<Node> getNodes()
+    {
+        return nodes;
+    }
+
+    <a name="size"/>
+    public int size()
+    {
+        return nodes.size();
+    }
+
+    <a name="iterator"/>
+    public Iterator<Node> iterator()
+    {
+        return nodes.iterator();
+    }
+
+
+//Commands -- none
+
+//Auxillary Methods and Constants
+    <a name="checkForFirstMemberOfTheList"/>
+    protected boolean checkForFirstMemberOfTheList(Lex lex)
+        throws ParserException
+    {
+        //The only method to call this method should be createList(Lex).  In
+        //that method we check to see if lex is null and, if so, throw an
+        //exception.  Thus, lex should never be null.
+        assert lex != null;
+
+        boolean result = false;
+        switch(getLengthConstraint()){
+            case ONE_OR_MORE:
+                result = true;
+                break;
+            case ZERO_OR_MORE:
+                result = isInFirstOfListElement(lex);
+                break;
+        };
+        return result;
+    }
+
+    <a name="checkForAnotherMemberOfTheList"/>
+    protected boolean checkForAnotherMemberOfTheList(Lex lex)
+        throws ParserException
+    {
+        //The only method to call this method should be createList(Lex).  In
+        //that method we check to see if lex is null and, if so, throw an
+        //exception.  Thus, lex should never be null.
+        assert lex != null;
+
+        boolean result = false;
+        Token separator = getSeparator();
+        if(separator == null){ //this means there is no separator
+            result = isInFirstOfListElement(lex);
+        } else {
+            result = lex.front().getTokenType() == separator.getTokenType();
+            if(result){
+                lex.popFront();
+            };
+        };
+        return result;
+    }
+
+    <a name="LengthConstraint"/>
+    protected enum LengthConstraint {ONE_OR_MORE, ZERO_OR_MORE};
+
+    // ------------------------------------------------------------------------
+    // The methods to be overridden in a specialization
+    // ------------------------------------------------------------------------
+
+    <a name="createNode"/>
+    abstract protected Node createNode(Lex lex) throws ParserException;
+
+
+    <a name="getSeparator"/>
+    protected Token getSeparator()
+    {
+        return null;
+    }
+
+    <a name="isInFirstOfListElement"/>
+    protected boolean isInFirstOfListElement(Lex lex)
+    {
+        // The method checkForAnotherMemberOfTheList(Lex) is the only
+        // method that calls this method.  checkForAnotherMemberOfTheList(Lex)
+        // assumes, and we have proved, the the program as it currently stands
+        // will not allow lex to be null at this point.  Thus, we make the
+        // assertion.
+        assert lex != null ;
+
+        return lex.front() instanceof Identifier;
+    }
+
+    <a name="getLengthConstraint"/>
+    protected LengthConstraint getLengthConstraint()
+    {
+        return LengthConstraint.ONE_OR_MORE;
+    }
+}
+</pre>
+</body>
+</html>

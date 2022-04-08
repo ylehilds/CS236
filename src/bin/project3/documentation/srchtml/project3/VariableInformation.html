@@ -1,0 +1,91 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import lex.Constant;
+import lex.Identifier;
+
+
+public class VariableInformation
+{
+//Domain Implementation
+    <a name="map"/>
+    protected HashMap<Identifier, Locations> map = null;
+
+//Constructors
+    <a name="DefaultConstructor"/>
+    public VariableInformation()
+    {
+        map = new HashMap<Identifier, Locations>();
+    } 
+
+//Queries
+    <a name="getLocationsFor"/>
+    public Iterator<Location> getLocationsFor(Identifier variable)
+    {
+        assert variable != null;
+
+        Iterator<Location> result = null;
+        if(map.containsKey(variable)){
+            result = map.get(variable).iterator();
+        };
+
+        return result;
+    }
+
+    <a name="getVariableIterator"/>
+    public Iterator<Identifier> getVariableIterator()
+    {
+        return map.keySet().iterator();
+    }
+
+    <a name="getVariables"/>
+    public Identifier[] getVariables()
+    {
+        Identifier[] result = new Identifier[map.size()];
+        int i = 0;
+        Iterator<Identifier> iter = getVariableIterator();
+        while(iter.hasNext()){
+            result[i] = iter.next();
+            i++;
+        };
+        return result;
+    }
+
+//Commands
+    <a name="remove"/>
+    public void remove(Identifier variable)
+    {
+        map.remove(variable);
+    }
+    
+    <a name="addLocationFor"/>
+    public void addLocationFor(Identifier variable, Location location)
+    {
+        assert variable != null && location != null;
+
+        Locations locations = null;
+        if(map.containsKey(variable)){
+            locations = map.get(variable);
+        } else {
+            locations = createLocations();
+            map.put(variable, locations);
+        }
+        locations.addLocation(location);
+    }
+
+//Auxillary Methods and Constants
+    <a name="createLocations"/>
+    protected Locations createLocations()
+    {
+        return new Locations();
+    }
+}
+</pre>
+</body>
+</html>

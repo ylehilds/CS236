@@ -1,0 +1,55 @@
+<html>
+<body>
+<pre>
+package lex;
+
+import project3.Node;
+import project3.ParserException;
+
+
+abstract public class Argument 
+    extends Token
+{
+//Domain Implementation
+    //TokenType type       -- inherited from Token
+    //String    value      -- inherited from Token
+    //int       lineNumber -- inherited from Token
+
+//Constructors
+    <a name="StandardConstructor"/>
+    protected Argument(TokenType type, String value, int lineNumber)
+        throws ParserException 
+    {
+        super(type, value, lineNumber);
+    }
+
+    <a name="CopyConstructor"/>
+    protected Argument(Token token)
+    {
+        super(token);
+    }
+
+//Queries
+
+//Commands
+    
+    <a name="createCopy"/>
+     static public Argument createCopy(Argument argument)
+         throws ParserException
+     {
+         assert argument != null;
+   
+         Argument result = null;
+         if(argument instanceof Identifier){
+             result = new Identifier(argument);
+         } else if(argument instanceof Constant){
+             result = new Constant((Constant)argument);
+         };
+         return result;
+     }
+
+//Auxiallary Methods and Constants
+}
+</pre>
+</body>
+</html>

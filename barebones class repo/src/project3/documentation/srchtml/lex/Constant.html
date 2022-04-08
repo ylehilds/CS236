@@ -1,0 +1,45 @@
+<html>
+<body>
+<pre>
+package lex;
+
+import project3.Node;
+import project3.ParserException;
+
+
+public class Constant 
+    extends Argument
+{
+//Constants
+//  TokenType type       -- inherited from Token through Argument
+//  String    value      -- inherited from Token through Argument
+//  int       lineNumber -- inherited from Token through Argument
+
+//Domain Implementation -- Inherited from Token
+
+//Constructors
+    <a name="StdConstructor"/>
+    public Constant(String value, int lineNumber)
+        throws ParserException
+    {
+        super(TokenType.STRING, value, lineNumber);
+    }
+
+    <a name="CopyConstructor"/>
+    public Constant(Token token)
+        throws ParserException
+    {
+        super(token);
+        assert token instanceof Constant;
+    }
+
+//Queries
+    <a name="toString"/>
+    public String toString()
+    {
+         return "'" + value + "'";
+    }
+}
+</pre>
+</body>
+</html>

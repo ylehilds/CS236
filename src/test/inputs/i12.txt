@@ -1,0 +1,24 @@
+Schemes:
+   childOf(X,Y)
+   marriedTo(X,Y)
+
+Facts:
+   marriedTo('Zed','Bea').
+   childOf('Jill','Zed').
+   childOf('Ned','Bea').
+   childOf('Tim','Bea').
+
+Rules:
+   childOf(X,Y):-childOf(X,Z),marriedTo(Y,Z).
+   marriedTo(X,Y):-marriedTo(Y,X).
+
+Queries: 
+   marriedTo(X,Y)?
+   childOf(Child,Parent)? 
+   childOf('Jill','Bea')? 
+   childOf('Ned','Zed')? 
+   childOf('Tim','Zed')? 
+   childOf('Bea','Zed')? 
+   childOf(X,'Zed')? 
+   marriedTo('Bea',X)?
+   marriedTo('Bea','Zed')?

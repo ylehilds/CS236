@@ -1,0 +1,31 @@
+Schemes:
+   A(A)
+   B(B)
+   C(C)
+   D(D)
+   E(E)
+   DeaWoo(A,B,C,D,E)
+
+Facts:
+   A('a').
+   B('b').
+   C('c').
+   D('d').
+   E('e').
+
+Rules:
+   DeaWoo(A,B,C,D,E):-A(A),A(B),A(C),A(D),A(E).
+   DeaWoo(A,B,C,D,E):-A(A),B(B),C(C),D(D),E(E). 
+   DeaWoo(A,B,C,D,E):-A(E),B(D),A(C),B(B),A(A).
+
+Queries:
+   DeaWoo(A,B,C,D,E)?
+   DeaWoo(A,B,C,D,A)?
+   DeaWoo(A,B,'b',B,A)?
+   DeaWoo(A,B,'a',D,E)?
+   DeaWoo(A,B,'b',D,E)? 
+   DeaWoo('a','a','a','a','a')? 
+   DeaWoo('b','b','b','b','b')? 
+   DeaWoo('a','b','a','b','a')? 
+   DeaWoo('b','a','b','a','b')? 
+   DeaWoo('a','b','c','d','a')?

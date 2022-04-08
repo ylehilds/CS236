@@ -1,0 +1,201 @@
+<html>
+<body>
+<pre>
+package lex;
+
+import project3.Node;
+import project3.ParserException;
+
+
+public class Token 
+    extends Node
+{
+//Constants
+    <a name="COMMA"/>
+    public static final Token COMMA = new Token(TokenType.COMMA, ",");
+
+//Domain Implementation
+    <a name="type"/>
+    protected TokenType type  = TokenType.UNDEFINED;
+
+    <a name="value"/>
+    protected String    value = null;
+
+    <a name="lineNumber"/>
+    protected int    lineNumber = -1;
+
+//Constructors
+    <a name="StdConstructor"/>
+    private Token(TokenType type, String value)
+    {
+        this.type = type;
+        if(type == TokenType.EOF){
+           this.value = "";
+        } else {
+           this.value = value;
+        };
+
+        this.lineNumber = -1;
+    }
+
+    <a name="StdConstructor2"/>
+    public Token(TokenType type, String value, int lineNumber)
+        throws ParserException 
+    {
+        checkConstructorPrecondition(type, value, lineNumber);
+
+        this.type = type;
+        if(type == TokenType.EOF){
+           this.value = "";
+        } else {
+           this.value = value;
+        };
+
+        this.lineNumber = lineNumber;
+    }
+
+    <a name="CopyConstructor"/>
+    public Token(Token token)
+    {
+        assert token != null;
+
+        type = token.type;
+        value = token.value == null ? null : new String(token.value);
+        lineNumber = token.lineNumber;
+    }
+
+//Queries
+    <a name="equals"/>
+    public boolean equals(Object object)
+    {
+        boolean result = object != null && object instanceof Token;
+        if(result){
+            Token token = (Token)object;
+            result = type == token.type &&
+                     ((value ==  null && token.value == null) ||
+                      (value != null && value.equals(token.value))
+                     );
+        };
+        return result;
+    }
+
+    <a name="getTokenType"/>
+    public TokenType getTokenType()
+    {
+        return type;
+    }
+
+    <a name="getValue"/>
+    public String getValue()
+    {
+        String result = null;
+        if(type == TokenType.STRING){
+             result = '\'' + value + '\'';
+        } else {
+             result = value;
+        };
+        return result;
+    }
+
+    <a name="getLineNumber"/>
+    public int getLineNumber()
+    {
+        return lineNumber;
+    }
+
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+        result.append("(");
+        result.append(type);
+        result.append(", ");
+        result.append(value);
+        result.append(", ");
+        result.append(lineNumber);
+        result.append(")");
+        return value;
+    }
+
+    <a name="hashCode"/>
+    public int hashCode()
+    {
+        return value.hashCode() + type.hashCode();
+    }
+
+//Auxillary Methods and Tokens
+    <a name="constructorPrecond"/>
+    protected void checkConstructorPrecondition(
+        TokenType type, String value, int lineNumber)
+        throws ParserException
+    {
+        String errorMessage = null;
+        if(type == null){
+            errorMessage = "type cannot be null";
+        } else if(type != TokenType.EOF && value == null){ 
+            errorMessage = "type != TokenType.EOF => value != null";
+        } else if(type != TokenType.EOF && type != TokenType.STRING &&
+                  value.length() == 0
+                 ){ 
+            errorMessage = "If the token is not an EOF or String token " +
+                            "then |value| > 0";
+        } else if(type == TokenType.ID &&
+                  !(Character.isLetter(value.charAt(0)) &&
+                    allTheRestMustBeLettersOrDigits(value))){
+            errorMessage = "type = TokenType.STRING =>\n" +
+                            "    the first character in value must be a letter"+
+                            " and\n" +
+                            "    the rest must be letters or digits";
+        } else if(type == TokenType.SCHEMES &&
+                  !value.equalsIgnoreCase("Schemes")){
+            errorMessage = "type = TokenType.SCHEMES =>\n" +
+                            "    value.equalsIgnoreCase(\"Schemes\")";
+        } else if(type == TokenType.FACTS &&
+                  !value.equalsIgnoreCase("Facts")){ 
+            errorMessage = "type = TokenType.FACTS =>\n" +
+                            "    value.equalsIgnoreCase(\"Facts\")";
+        } else if(type == TokenType.RULES &&
+                  !value.equalsIgnoreCase("Rules")){ 
+            errorMessage = "type = TokenType.RULES =>\n" +
+                            "    value.equalsIgnoreCase(\"Rules\")";
+        } else if(type == TokenType.QUERIES &&
+                  !value.equalsIgnoreCase("Queries")){ 
+            errorMessage = "type = TokenType.QUERIES =>\n" +
+                            "    value.equalsIgnoreCase(\"Queries\")";
+        } else if(type == TokenType.COLON_DASH && !value.equals(":-")){
+            errorMessage = "type = TokenType.COLON_DASH => value = \":-\""; 
+        } else if(type == TokenType.COLON && !value.equals(":")){
+            errorMessage = "type = TokenType.COLON => value = \":\""; 
+        } else if(type == TokenType.COMMA && !value.equals(",")){
+            errorMessage = "type = TokenType.COMMA => value = \",\""; 
+        } else if(type == TokenType.PERIOD && !value.equals(".")){
+            errorMessage = "type = TokenType.PERIOD => value = \".\""; 
+        } else if(type == TokenType.LEFT_PAREN && !value.equals("(")){
+            errorMessage = "type = TokenType.LEFT_PAREN => value = \"(\""; 
+        } else if(type == TokenType.RIGHT_PAREN && !value.equals(")")){
+            errorMessage = "type = TokenType.RIGHT_PAREN => value = \")\""; 
+        } else if(type == TokenType.Q_MARK && !value.equals("?")){
+            errorMessage = "type = TokenType.Q_MARK => value = \"?\""; 
+        } else if(lineNumber <= 0){
+            errorMessage = "lineNumber must be >= 1";
+        };
+        if(errorMessage != null)
+            throw new ParserException(
+               "ERROR in one of the Token::constructor\n" + errorMessage);
+    }
+
+    <a name="lettersOrDigits"/>
+    protected boolean allTheRestMustBeLettersOrDigits(String value)
+    {
+        boolean result = value != null;
+
+        for(int i = 1; result && i < value.length(); i++){
+            result = Character.isLetterOrDigit(value.charAt(i));
+        };
+
+        return result;
+    }
+}
+</pre>
+</body>
+</html>

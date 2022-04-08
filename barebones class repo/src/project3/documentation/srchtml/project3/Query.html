@@ -1,0 +1,117 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import lex.Constant;
+import lex.Identifier;
+import lex.Lex;
+import lex.Token;
+import lex.TokenType;
+
+
+public class Query
+    extends PredicateList
+{
+//Domain Implementation
+    // VariableInformation variableInformation
+    //   -- inherited from PredicateList. But, we assign an instance of
+    //   -- QueryVariableInformation to it.  A QueryVariableInformation inherits
+    //   -- everything from VariableInformation plus it includes the current
+    //   -- value for a variable.
+    //    
+    // Iterator<Identifier> variableIterator -- inherited from PredicateList
+
+    <a name="setOfSolutions"/>
+    protected SetOfSolutions setOfSolutions = null;
+
+//Constructors
+    <a name="LexConstructor"/>
+    public Query(Lex lex)
+        throws ParserException
+    {
+        super(lex);
+
+        checkFor(lex, TokenType.Q_MARK);
+
+        if(nodes.size() != 1)
+            throw new ParserException(
+                "Error while parsing Query on or before line " +
+                lex.front().getLineNumber() + ".\n" +
+                "A Query can have only one simple predicate");
+
+        setOfSolutions =
+            new SetOfSolutions(
+                ((QueryVariableInformation)variableInformation).getVariables());
+    }
+
+//Queries
+    <a name="evaluate"/>
+    public boolean evaluate(StringBuffer strBuffer)
+        throws ParserException
+    {
+       //We copy <i>this</i> query as a PredicateList so that when apply
+       //"toString()" to it we will get the "toString()" method of
+       //PredicateList rather than the "toString()" method of Query.
+        copy = new PredicateList(this);
+
+        boolean result = super.evaluate();
+        strBuffer.append(toString());
+        return result;
+    }
+
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+        if(copy == null){
+            result.append(super.toString());
+        } else {
+            result.append(copy.toString());
+        };
+        result.append("?");
+        result.append(setOfSolutions);
+        result.append("\n");
+        return result.toString();
+    }
+
+//Commands
+    <a name="saveResult"/>
+    protected void saveResult()
+    {
+        setOfSolutions.addSolution(
+            ((QueryVariableInformation)variableInformation).getSolution());
+    }
+
+    <a name="setVariableToValue"/>
+    public void setVariableToValue(Identifier variable, Constant value)
+        throws ParserException
+    {
+        super.setVariableToValue(variable, value);
+        //assert variable != null || value != null; -- checked in superclass
+        ((QueryVariableInformation)variableInformation).
+            setValueFor(variable, value);
+    }
+
+//Auxillary Methods and  Constants
+    <a name="copy"/>
+    protected PredicateList copy = null;
+
+
+    <a name="initializeVariableInformation"/>
+    protected void initializeVariableInformation()
+    {
+        variableInformation = new QueryVariableInformation();
+        setUpVariableLocationMapping();
+    }
+
+    <a name="keepOnGoing"/>
+    protected boolean keepOnGoing(boolean validSolutionFound)
+    {
+        return true;
+    }
+}
+
+</pre>
+</body>
+</html>

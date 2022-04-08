@@ -1,0 +1,81 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import lex.Constant;
+import lex.Identifier;
+
+
+public class QueryVariableInformation
+    extends VariableInformation
+{
+//Domain Implementation
+//  Map<Identifier, Locations> map -- inherited from VariableInformation
+//       -- since a LocationsAndValue is a Locations, we can store at
+//       -- LocationsAndValue in the map.
+
+//Constructors
+    <a name="DefaultConst"/>
+    public QueryVariableInformation()
+    {
+        super();
+    } 
+
+//Queries
+    <a name="getValueFor"/>
+    public Constant getValueFor(Identifier variable)
+    {
+        assert variable != null;
+
+        Constant result = null;
+        if(map.containsKey(variable)){
+            result = ((LocationsAndValue)map.get(variable)).getValue();
+        };
+
+        return result;
+    }
+
+    <a name="getSolution"/>
+    public Constant[] getSolution()
+    {
+        Constant[] result = new Constant[map.size()];
+        int i = 0;
+        Iterator<Identifier> iter = getVariableIterator();
+        while(iter.hasNext()){
+            result[i] = ((LocationsAndValue)map.get(iter.next())).getValue();
+            i++;
+        };
+        return result;
+    }
+
+//Commands
+    <a name="setValueFor"/>
+    public void setValueFor(Identifier variable, Constant value)
+    {
+        assert variable != null && value != null;
+
+        LocationsAndValue locationsAndValue = null;
+        if(map.containsKey(variable)){
+            locationsAndValue = (LocationsAndValue)map.get(variable);
+        } else {
+            locationsAndValue = (LocationsAndValue)createLocations();
+            map.put(variable, locationsAndValue);
+        }
+        locationsAndValue.setValue(value);
+    }
+
+//Auxillary Methods and Constants
+    <a name="createLocations"/>
+    protected Locations createLocations()
+    {
+        return new LocationsAndValue();
+    }
+}
+</pre>
+</body>
+</html>

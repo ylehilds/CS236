@@ -1,0 +1,16 @@
+snap(Id,'Snoopy',Address,Phone)? Yes(1)
+  Id='67890', Address='12 Apple St.', Phone='555-1234'
+csg(Course,'12345',Grade)? Yes(2)
+  Course='CS101', Grade='A'
+  Course='EE200', Grade='C'
+cdh('EE200',Day,Hour)? Yes(1)
+  Day='M', Hour='10AM'
+cr('CS101',Room)? Yes(1)
+  Room='Turing Aud.'
+Grades('Snoopy',Course,Grade)? Yes(2)
+  Course='CS101', Grade='B'
+  Course='PH100', Grade='C+'
+Students('EE200','25 Ohm Hall','Brown','12345',G)? Yes(1)
+  G='C'
+Schedule('Snoopy','CS101',R,'Tu','10AM')? Yes(1)
+  R='Turing Aud.'

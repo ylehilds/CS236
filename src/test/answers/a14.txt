@@ -1,0 +1,10 @@
+WhoToBlame('Dilbert',Job)? Yes(2)
+  Job='EE'
+  Job='Marketing'
+WhoToBlame(Name,'EE')? Yes(2)
+  Name='Dilbert'
+  Name='Dogbert'
+Salary('Dilbert',Pay)? Yes(2)
+  Pay='15k'
+  Pay='60k'
+Salary('PHB','60k')? No

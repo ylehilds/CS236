@@ -1,0 +1,13 @@
+Queries:
+     IsInRoomAtDH('Snoopy',R,'M',H)
+#SchemesFactsRules
+.
+
+#|
+
+
+comment >=
+
+wow
+
+

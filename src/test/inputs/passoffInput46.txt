@@ -1,0 +1,36 @@
+Schemes:
+   childOf(X,Y)
+   marriedTo(X,Y)
+   siblings(A,B,C,D)
+
+Facts:
+   marriedTo('Zed','Bea').
+   marriedTo('Bea','Zed').
+   childOf('Jill','Zed').
+   childOf('Ned','Bea').
+   childOf('Tim','Bea').
+   childOf('Zed','Zed').
+   siblings('Jill','Zed','Tim','Zed').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   childOf('George Foreman','George Foreman').
+   siblings('George Foreman','George Foreman','George Foreman','George Foreman').
+   siblings('George Foreman','George Foreman','George Foreman','George Foreman').
+   siblings('George Foreman','George Foreman','George Foreman','George Foreman').
+   siblings('Tod','Tod','George Foreman','Tod').
+
+Rules:
+   childOf(X,Y):-childOf(X,Z),marriedTo(Y,Z).
+   marriedTo(X,Y):-marriedTo(Y,X).
+
+Queries:
+   marriedTo(Y,X)?
+   childOf(Y,Y)? 
+   childOf(Y,'Bea')?
+   siblings(A,B,B,A)?
+   siblings(A,C,'George Foreman',A)?

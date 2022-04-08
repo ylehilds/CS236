@@ -1,0 +1,49 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+import lex.Constant;
+
+
+public class Domain
+{
+//Domain Implementations
+    <a name="domain"/>
+    public static HashSet<Constant> domain = new HashSet<Constant>();
+
+//Constructors
+
+//Queries
+    <a name="iterator"/>
+    public static Iterator<Constant> iterator()
+    {
+        return domain.iterator();
+    }
+
+    <a name="isEmpty"/>
+    public static boolean isEmpty()
+    {
+        return domain.isEmpty();
+    }
+
+//Commands
+    <a name="add"/>
+    public static void add(Constant value)
+    {
+        assert value != null;
+        domain.add(value);
+    }
+
+    <a name="reset"/>
+    public static void reset()
+    {
+        domain = new HashSet<Constant>();
+    }
+}
+</pre>
+</body>
+</html>

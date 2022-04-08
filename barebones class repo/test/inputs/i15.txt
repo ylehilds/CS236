@@ -1,0 +1,38 @@
+Schemes:
+   snap(S,N,A,P)
+   csg(C,S,G)
+   cdh(C,D,H)
+   cr(C,R)
+   Schedule(N,C,R,D,H)
+   Grades(N,C,G)
+   Students(C,R,N,S,G)
+
+Facts:
+   snap('12345','Brown','12 Apple St.','555-1234').
+   snap('67890','Snoopy','12 Apple St.','555-1234').
+   csg('CS101','12345','A').
+   csg('CS101','67890','B').
+   csg('EE200','12345','C').
+   csg('PH100','67890','C+').
+   cdh('CS101','Tu','10AM').
+   cdh('EE200','M','10AM').
+   cdh('PH100','Tu','11AM').
+   cr('CS101','Turing Aud.').
+   cr('EE200','25 Ohm Hall').
+   cr('PH100','Newton Lab.').
+
+Rules:
+   Schedule(N,C,R,D,H):-
+snap(S,N,A,P),csg(C,S,G),cr(C,R),cdh(C,D,H).
+   Grades(N,C,G):-snap(S,N,A,P),csg(C,S,G).
+   Students(C,R,N,S,G):-
+snap(S,N,A,P),csg(C,S,G),cr(C,R).
+
+Queries:
+   snap(Id,'Snoopy',Address,Phone)?
+   csg(Course, '12345',Grade)?
+   cdh('EE200',Day,Hour)?
+   cr('CS101',Room)?
+   Grades('Snoopy',Course,Grade)?
+   Students('EE200','25 Ohm Hall','Brown','12345',G)? 
+   Schedule('Snoopy','CS101',R,'Tu','10AM')?

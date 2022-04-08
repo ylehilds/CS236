@@ -1,0 +1,14 @@
+Schemes:
+  Fox(A,B,C)
+  gOAT(aMINAL,sTUBBORN)
+Facts:
+  Fox('brown','tail','sly').
+  gOAT('kids','cans').
+  gOAT('kids','').
+  gOAT('','').
+  Fox('red','tail','sly').
+Rules:
+Queries:
+  Fox(COLOR,appearance,ATTITUDE)?
+  gOAT(POSTERITY,DIET)?
+  gOAT(POSTERITY,'cans')?

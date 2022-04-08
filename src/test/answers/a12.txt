@@ -1,0 +1,21 @@
+marriedTo(X,Y)? Yes(2)
+  Y='Zed', X='Bea'
+  Y='Bea', X='Zed'
+childOf(Child,Parent)? Yes(6)
+  Child='Tim', Parent='Zed'
+  Child='Tim', Parent='Bea'
+  Child='Ned', Parent='Zed'
+  Child='Ned', Parent='Bea'
+  Child='Jill', Parent='Zed'
+  Child='Jill', Parent='Bea'
+childOf('Jill','Bea')? Yes(1)
+childOf('Ned','Zed')? Yes(1)
+childOf('Tim','Zed')? Yes(1)
+childOf('Bea','Zed')? No
+childOf(X,'Zed')? Yes(3)
+  X='Tim'
+  X='Ned'
+  X='Jill'
+marriedTo('Bea',X)? Yes(1)
+  X='Zed'
+marriedTo('Bea','Zed')? Yes(1)

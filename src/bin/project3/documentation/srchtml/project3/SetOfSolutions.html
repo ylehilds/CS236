@@ -1,0 +1,109 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import lex.Constant;
+import lex.Identifier;
+
+
+public class SetOfSolutions
+{
+//Domain Implementation
+    <a name="variables"/>
+    protected Identifier[] variables = null;
+
+    <a name="setOfSolutions"/>
+    protected ArrayList<Constant[]> setOfSolutions = null;
+
+//Constructor
+    <a name="PrimaryConstructor"/>
+    public SetOfSolutions(Identifier[] variables)
+    {
+        assert variables != null;
+
+        boolean foundNull = false;
+        for(int i = 0; i < variables.length && !foundNull; i++){
+            foundNull = variables[i] == null;
+        };
+        assert !foundNull;
+
+        this.variables = variables;
+        setOfSolutions = new ArrayList<Constant[]>();
+    }
+
+//Query
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+
+        if(setOfSolutions.size() == 0){
+            result.append(" No\n");
+        } else {
+            result.append(" Yes\n");
+            Iterator<Constant[]> solutionsIterator =
+                setOfSolutions.iterator();
+            while(solutionsIterator.hasNext()){
+                printSolutions(result, solutionsIterator.next());
+            };
+        };
+        return result.toString();
+    }
+
+//Commands
+    <a name="addSolution"/>
+    public void addSolution(Constant[] solution)
+    {
+        assert solution != null &&
+               solution.length == variables.length; 
+
+        if(!setOfSolutions.contains(solution)){
+            setOfSolutions.add(solution);
+        };
+    }
+
+//Auxillary Methods and Constants
+    <a name="printSolutions"/>
+    protected void printSolutions(StringBuffer result, Constant[] solution)
+    {
+        assert result != null; 
+
+        if(solution.length > 0){
+            result.append("  " + variables[0] + " = " + solution[0]);
+
+            int i = 1;        
+            while(i < variables.length){
+                result.append(", " + variables[i] + " = " + solution[i]);
+                i++;
+            };
+            result.append('\n');
+        };
+    }
+
+    <a name="contains"/>
+    private boolean contains(Constant[] solution)
+    {
+        assert solution != null &&
+               solution.length == variables.length;
+
+        boolean result = false;
+        Iterator<Constant[]> iter = setOfSolutions.iterator();
+        while(iter.hasNext() && !result){
+            Constant[] constants = iter.next();
+            boolean same = true;
+            for(int i = 0; i < solution.length && same; i++){
+                same = solution[i].equals(constants[i]);
+            };
+            result = same;
+        };
+
+        return result;
+    }
+}
+</pre>
+</body>
+</html>

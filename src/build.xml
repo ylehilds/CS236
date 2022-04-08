@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<!-- build.xml - The Project1,2,3,4,5 buildfile -->
+<project name="cs236" default="help" basedir=".">
+
+  <!--**********************************************************************-->
+  <!--TA TARGETS. IMPORTED ONLY WHEN LOGGED IN AS cs236ta-->
+  <!--<import file="/users/home2/ta/cs236ta/passoff/passoffBuild.xml"/>-->
+
+  <!--SOURCE CODE DIRECTORIES -->
+    <property name="src" value="src"/>
+    <property name="proj3src" value="${src}/project3"/>
+
+  <!--TEST DIRECTORIES-->
+    <property name="test" value="test"/>
+    <property name="test-src" value="${test}/test-src"/>
+    <property name="test-reports" value="${test}/test-reports"/>
+	
+  <!--BUILD DIRECTORY-->
+    <property name="build" value="build"/>
+
+  <!--JAR NAMES-->
+    <property name="proj1jar" value="project1.jar"/>
+    <property name="proj2jar" value="project2.jar"/>
+    <property name="proj3jar" value="project3.jar"/>
+    <property name="proj4jar" value="project4.jar"/>
+    <property name="proj5jar" value="project5.jar"/>
+
+  <!--JAVADOC DIRECTORY -->
+    <property name="doc" value="${proj3src}/documentation"/>
+
+  <!--PATH DEFINITIONS.-->
+  <!--Note: the junit.jar is automatically on the classpath. No need to install junit-->
+    <path id="classpath.src.classes">
+      <pathelement location="${build}"/>
+    </path>
+    <path id="classpath.test.classes">
+      <pathelement location="${test-src}/junit.jar"/>
+      <pathelement location="${junit.test.classes}"/>
+      <path refid="classpath.src.classes"/>
+    </path>
+
+  <!--DEFAULT TARGET-->
+  <!--Lists the descriptions of the the targets-->
+  <target name="help">
+    <echo>****************************************</echo>
+    <echo>***** CS 236 BUNDLE &amp; ANT HELP *****</echo>
+    <echo>****************************************</echo>
+    <echo/>
+    <echo>help</echo>
+    <echo>  -Lists the descriptions of the commands that the ant can do</echo>
+    <echo/>
+    <echo>clean</echo>
+    <echo>  -Deletes *.class, *.jar, *~, and files that don't belong</echo>
+    <echo/>
+    <echo>compile#</echo>
+    <echo>  -Replace the # symbol with a number: 1 to 5</echo>
+    <echo>  -Compiles Project#Driver.java, project# folder</echo>
+    <echo>   and all earlier projects</echo>
+    <echo/>
+    <echo>compile</echo>
+    <echo>  -Execute all compile commands 1 to 5</echo>
+    <echo/>
+    <echo>run#</echo>
+    <echo>  -Replace the # symbol with a number: 1 to 5</echo>
+    <echo>  -Runs your project#. It will prompt you for a filename.</echo>
+    <echo/>
+    <echo>jar#</echo>
+    <echo>  -Replace the # symbol with a number: 1 to 5</echo>
+    <echo>  -Creates project#.jar in the cs236 directory containing</echo>
+    <echo>   the project# folder and all earlier project folders.</echo>
+    <echo>   Submit this jar as your project#</echo>
+    <echo/>
+    <echo>jar</echo>
+    <echo>  -Execute all jar commands 1 to 5</echo>
+    <echo/>
+    <echo>testlex</echo>
+    <echo>  -Execute the Lex tests for Project3</echo>
+    <echo/>
+    <echo>testparser</echo>
+    <echo>  -Execute the Parser tests for Project3</echo>
+    <echo/>
+    <echo>testproject3</echo>
+    <echo>  -Execute the Project3 main test</echo>
+    <echo/>
+    <echo>timetest3</echo>
+    <echo>  -Execute the time test for Project3</echo>
+    <echo/>
+    <echo>testall3</echo>
+    <echo>  -Execute all tests for Project3</echo>
+    <echo/>
+    <echo>timetest5</echo>
+    <echo>  -Execute the time test for Project5</echo>		
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Create the build directories prior to the compile target -->
+  <target name="prepare">
+    <mkdir dir="${build}"/>
+  </target>
+
+  <!--***********************************************************************-->
+  <!-- Create the reports directory prior to junit test compilation -->
+  <target name="init">
+    <mkdir dir="${test-reports}"/>
+  </target>
+	
+
+  <!--***********************************************************************-->
+  <!-- Clean cs236 -->
+  <target name="clean">
+      <delete dir="${build}"/>
+      <delete dir="${test-reports}"/>
+      <delete includeEmptyDirs="Yes" verbose="Yes">
+        <fileset dir="." defaultExcludes="no" casesensitive="false">
+          <!--search for trash-->
+            <include name="**/*"/>
+          <!--keep-->
+            <exclude name="build.xml"/>
+            <exclude name="${src}/**/*.java"/> 
+            <exclude name="${test-src}/**/*.java"/>
+            <exclude name="${test-src}/testlex/*.txt"/>
+            <exclude name="${test-src}/junit*.jar"/>
+            <exclude name="${test}/*input*/**/*"/>
+            <exclude name="${test}/*answer*/**/*.txt"/>
+            <exclude name="${doc}/**/*"/>
+            <exclude name="${proj3src}/project3-API.html"/>
+        </fileset>
+      </delete>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Compile project1 -->
+  <target name="compile1" depends="prepare">	
+    <javac destdir="${build}" debug="Yes" listfiles="Yes">
+      <src path="${src}"/>
+      <include name="Driver.java"/>
+      <include name="project1/**/*.java"/>
+      <classpath refid="classpath.src.classes"/>
+    </javac>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Compile project2-->
+  <target name="compile2" depends="compile1">
+    <javac destdir="${build}" debug="Yes" listfiles="Yes">
+      <src path="${src}"/>
+      <include name="project2/**/*.java"/>
+      <classpath refid="classpath.src.classes"/>
+    </javac>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Compile project3 -->
+  <target name="compile3" depends="prepare">
+    <javac destdir="${build}" debug="Yes" listfiles="Yes">
+      <src path="${src}"/>
+      <include name="Driver.java"/>
+      <include name="project3/*.java"/>
+      <include name="project3/lex/*.java"/>
+      <include name="project3/three/*.java"/>
+      <classpath refid="classpath.src.classes"/>
+    </javac>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Compile project4-->
+  <target name="compile4" depends="compile2">
+    <javac destdir="${build}" debug="Yes" listfiles="Yes">
+      <src path="${src}"/>
+      <include name="project4/**/*.java"/>
+      <classpath refid="classpath.src.classes"/>
+    </javac>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Compiles project5 -->
+  <target name="compile5" depends="compile4">
+    <javac destdir="${build}" debug="Yes" listfiles="Yes">
+      <src path="${src}"/>
+      <include name="project5/**/*.java"/>
+      <classpath refid="classpath.src.classes"/>
+    </javac>
+  </target>
+
+	  <!--***********************************************************************-->
+	  <!-- Compile tests for 3-->
+	  <target name="compile3tests" depends="compile3">
+	    <javac destdir="${build}" debug="Yes">
+	      <src path="${test-src}"/>
+	      <include name="*3*/**/*.java"/>
+	      <include name="testparser/*.java"/>
+	      <include name="testlex/*.java"/>
+	      <include name="answerParser/*.java"/>
+	      <include name="util/*.java"/>
+	      <classpath refid="classpath.test.classes"/>
+	    </javac>
+	  </target>
+	
+  <!--***********************************************************************-->
+  <!-- Compile tests for 5-->
+  <target name="compile5tests" depends="compile5">
+    <javac destdir="${build}" debug="Yes">
+      <src path="${test-src}"/>
+      <include name="*5*/*.java"/>
+      <include name="answerParser/*.java"/>
+      <include name="util/*.java"/>
+      <classpath refid="classpath.test.classes"/>
+    </javac>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Compiles everything in projects directory -->
+  <target name="compile" depends="compile5tests, compile3tests"/>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs project1 -->
+  <target name="run1" depends="compile1">
+    <input message="Input a filename in the test/inputs directory (ie: ex10.txt):"
+           addproperty="file" defaultvalue="ex10.txt"/>
+    <echo>java -cp build/ Driver 1 test/inputs/${file}</echo>
+    <echo/>
+    <exec executable="java">
+      <arg line="-cp build/ Driver 1 test/inputs/${file}"/>
+    </exec>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs project2 -->
+  <target name="run2" depends="compile2">
+    <input message="Input a filename in the test/inputs directory (ie: ex20.txt):"
+           addproperty="file" defaultvalue="ex20.txt"/>
+    <echo>java -cp build/ Driver 2 test/inputs/${file}</echo>
+    <echo/>
+    <exec executable="java">
+      <arg line="-cp build/ Driver 2 test/inputs/${file}"/>
+    </exec>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs project3 -->
+  <target name="run3" depends="compile3">
+    <input message="Input a filename in the test/inputs directory (ie: i01.txt ):"
+           addproperty="file" defaultvalue="i01.txt"/>
+    <echo>java -cp build/ Driver 3 test/inputs/${file}</echo>
+    <echo/>
+    <exec executable="java">
+      <arg line="-cp build/ Driver 3 test/inputs/${file}"/>
+    </exec>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs project4 -->
+  <target name="run4" depends="compile4">
+    <input message="Input a filename in the test/inputs directory (ie: ex41.txt):"
+           addproperty="file" defaultvalue="ex41.txt"/>
+    <echo>java -cp build/ Driver 4 test/inputs/${file}</echo>
+    <echo/>
+    <exec executable="java">
+      <arg line="-cp build/ Driver 4 test/inputs/${file}"/>
+    </exec>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs project5 -->
+  <target name="run5" depends="compile5">
+    <input message="Input a filename in the test/inputs/ directory (ie: i01.txt,ex50.txt):"
+           addproperty="file" defaultvalue="i01.txt"/>
+    <echo>java -cp build/ Driver 5 test/inputs/${file}</echo>
+    <echo/>
+    <exec executable="java">
+      <arg line="-cp build/ Driver 5 test/inputs/${file}"/>
+    </exec>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Creates project1.jar in cs236 folder used for submission -->
+  <target name="jar1">
+    <delete file="${proj1jar}" quiet="Yes"/>
+    <jar jarfile="${proj1jar}" basedir="${src}">
+      <include name="project1/**/*.java"/> 
+    </jar>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Creates project2.jar in cs236 folder used for submission -->
+  <target name="jar2">
+    <delete file="${proj2jar}" quiet="Yes"/>
+    <jar jarfile="${proj2jar}" basedir="${src}">
+      <include name="project2/**/*.java"/> 
+      <include name="project1/**/*.java"/> 
+    </jar>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Creates project3.jar in cs236 folder used for submission -->
+  <target name="jar3">
+    <delete file="${proj3jar}" quiet="Yes"/>
+    <jar jarfile="${proj3jar}" basedir="${src}">
+      <include name="project3/PredicateList.java"/> 
+      <include name="project3/RuleList.java"/> 
+    </jar>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Creates project4.jar in cs236 folder used for submission -->
+  <target name="jar4">
+    <delete file="${proj4jar}" quiet="Yes"/>
+    <jar jarfile="${proj4jar}" basedir="${src}">
+      <include name="project4/**/*.java"/> 
+      <include name="project2/**/*.java"/> 
+      <include name="project1/**/*.java"/> 
+    </jar>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Creates project5.jar in cs236 folder used for submission -->
+  <target name="jar5">
+    <delete file="${proj5jar}" quiet="Yes"/>
+    <jar jarfile="${proj5jar}" basedir="${src}">
+      <include name="project5/**/*.java"/>
+      <include name="project4/**/*.java"/> 
+      <include name="project2/**/*.java"/> 
+      <include name="project1/**/*.java"/> 
+    </jar>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Creates project5.jar in cs236 folder used for submission -->
+  <target name="jar" depends="jar1, jar2, jar3, jar4, jar5"/>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs the junit test case for Lex of project3 -->
+  <target name="testlex" depends="compile3tests">
+    <junit fork="yes" showoutput="yes" printsummary="no"
+    	haltonfailure="no" tempdir="${build}">
+      <classpath refid="classpath.test.classes"/>
+      <jvmarg value="-ea"/>
+      <formatter type="brief" usefile="false"/>
+      <test name="testlex.LexTestSuite"/> 
+    </junit>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs the junit test case for the Parser of project3 -->
+  <target name="testparser" depends="compile3tests">
+    <junit fork="yes" showoutput="yes" printsummary="no"
+    	haltonfailure="no" tempdir="${build}">
+      <classpath refid="classpath.test.classes"/>
+      <jvmarg value="-ea"/>
+      <formatter type="brief" usefile="false"/>
+      <test name="testparser.ParserTestSuite"/> 
+    </junit>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs the junit test case for Project3 -->
+  <target name="testproject3" depends="compile3tests,init">
+    <junit fork="yes" showoutput="yes" printsummary="no"
+    	haltonfailure="no" tempdir="${build}">
+      <classpath refid="classpath.test.classes"/>
+      <jvmarg value="-ea"/>
+      <formatter type="brief" usefile="true"/>
+      <test name="testproject3.TestProject3Suite"
+      		todir="${test-reports}"
+      		outfile="testproject3"/> 
+    </junit>
+  	<echo/><echo>Messages and output have been written to:</echo>
+  	<echo>	${test-reports}/testproject3.txt</echo>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs the time test case for Project3 -->
+  <target name="timetest3" depends="compile3tests,init">
+    <junit fork="yes" showoutput="yes" printsummary="no"
+  	    haltonfailure="no" tempdir="${build}">
+      <classpath refid="classpath.test.classes"/>
+      <jvmarg value="-ea"/>
+      <formatter type="brief" usefile="true"/>
+      <test name="timetest3.TimeTest3Suite"
+		todir="${test-reports}"
+		outfile="timetest3"/> 
+    </junit>
+  	<echo/><echo>Messages and output have been written to:</echo>
+  	<echo>	${test-reports}/timetest3.txt</echo>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs all tests of project3 -->
+  <target name="testall3" depends="testlex, testparser, testproject3, timetest3"/>
+
+
+  <!--***********************************************************************-->
+  <!-- Runs the time test case for Project5 -->
+  <target name="timetest5" depends="compile5tests,init">
+    <junit fork="yes" showoutput="yes" printsummary="no"
+			haltonfailure="no" tempdir="${build}">
+      <classpath refid="classpath.test.classes"/>
+      <jvmarg value="-ea"/>
+      <formatter type="brief" usefile="true"/>
+      <test name="timetest5.TimeTest5Suite"
+      		todir="${test-reports}"
+      		outfile="timetest5"/>
+    </junit>
+  	<echo/><echo>Messages and output have been written to:</echo>
+  	<echo>	${test-reports}/timetest5.txt</echo>
+  </target>
+
+
+  <!--***********************************************************************-->
+  <!-- Generates the javadoc for project3 -->
+  <target name="jdoc">
+    <javadoc sourcepath="${src}"
+      linksource="yes"
+      destdir="${doc}"
+      source="1.5"
+      access="private"
+      packagenames="project3.three.*, project3.lex.*, project3.*">
+    </javadoc>
+  </target>
+
+</project>

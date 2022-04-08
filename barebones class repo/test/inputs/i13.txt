@@ -1,0 +1,23 @@
+Schemes:
+   F(a,b)
+   G(a,b)
+   H(a,b)
+ 
+Facts:
+   F('1','2').
+   G('2','3').
+   H('3','2').
+ 
+Rules:
+   F(a,b):-G(b,a),H(a,b).
+   G(a,b):-H(b,a),F(b,a).
+   H(a,b):-F(b,a),G(a,b).
+   F(a,b):-F(b,a).
+ 
+Queries:
+   F(A,B)?
+   G(A,B)?
+   H(A,B)?
+   F('2',B)?
+   G(A,'2')? 
+   G('2','2')?

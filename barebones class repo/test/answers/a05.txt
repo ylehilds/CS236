@@ -1,0 +1,9 @@
+DeaWoo(A,B,C,D,E,F,G)? Yes(1)
+  E = 'a', G = 'b', C = 'a', D = 'a', F = 'a', B = 'a', A = 'a'
+DeaWoo(A,B,'a',D,E,F,G)? Yes(1)
+  E = 'a', G = 'b', D = 'a', F = 'a', B = 'a', A = 'a'
+DeaWoo(A,B,'b',D,E,F,G)? No
+DeaWoo(A,B,'a',D,E,F,A)? No
+DeaWoo(A,B,'a',D,E,A,G)? Yes(1)
+   E = 'a', G = 'b', D = 'a', B = 'a', A = 'a'
+DeaWoo('a','a','a','a','a','a','b')? Yes(1)

@@ -1,0 +1,208 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import lex.Argument;
+import lex.Constant;
+import lex.Identifier;
+import lex.Lex;
+import lex.Token;
+
+
+
+public class PredicateList
+    extends List
+{
+//Domain Implementation
+//  ArrayList<Node> nodes; -- implements Sequence<Predicate>
+//                         -- inherited from List through DatalogSegment.
+    <a name="variableInformation"/>
+    protected VariableInformation variableInformation = null;
+
+//Constructors
+    <a name="DefaultConstructor"/>
+    public PredicateList()
+    {
+        super();
+    }
+   
+    <a name="LexConstructor"/>
+    public PredicateList(Lex lex)
+        throws ParserException
+    {
+        createList(lex);
+        initializeVariableInformation();
+    }
+
+    <a name="copyConstructor"/>
+    public PredicateList(PredicateList predicateList)
+        throws ParserException
+    {
+        super();
+        assert predicateList != null;
+        //Need to do a deeper copy here than in the List.  We need to make
+        //Make new copies of the Predicates so that when we change them we
+        //don't change the originals.
+        Iterator<Node> iter = predicateList.nodes.iterator();
+        while(iter.hasNext()){
+            nodes.add(new Predicate((Predicate)iter.next()));
+        };
+        initializeVariableInformation();
+    }
+
+//Queries
+    <a name="equals"/>
+    public boolean equals(Object o)
+    {
+        boolean result = o != null && o instanceof PredicateList;
+        if(result){
+            Iterator<Node> iter1 = nodes.iterator();
+            Iterator<Node> iter2 = ((PredicateList)o).nodes.iterator();
+            while(iter1.hasNext() && iter2.hasNext() && result){
+                result = iter1.next().equals(iter2.next());
+            };
+            result = result && iter1.hasNext() == iter2.hasNext();
+        };
+        return result;
+    }
+
+    <a name="evaluate"/>
+    public boolean evaluate()
+        throws ParserException
+    {
+        assert variableInformation != null;
+
+        //We could have passed the variableIterator as a parameter in the
+        //recursion but choose to make it a variable global to the recursion.
+        variables = variableInformation.getVariables();
+        return recurse(0);
+    }
+
+    <a name="createAllCombinations"/>
+    protected boolean createAllCombinations(int i)
+        throws ParserException
+    {
+    }
+
+//Commands
+    <a name="setVariables"/>
+    public void setVariables(HashMap<Identifier, Constant> variableValuePairs)
+        throws ParserException
+    {
+        assert variableValuePairs != null;
+
+        Iterator<Identifier> variableIterator =
+            variableValuePairs.keySet().iterator(); 
+        while(variableIterator.hasNext()){
+            Identifier variable = variableIterator.next();
+            setVariableToValue(variable, variableValuePairs.get(variable));
+            variableInformation.remove(variable);
+        };
+    }
+
+    <a name="setVariableToValue"/>
+    public void setVariableToValue(Identifier variable, Constant value)
+        throws ParserException
+    {
+        assert variable != null || value != null;
+
+        Iterator<Location> locationIter =
+            variableInformation.getLocationsFor(variable);
+        while(locationIter != null && locationIter.hasNext()){
+            Location location = locationIter.next();
+            Predicate predicate =
+                (Predicate)nodes.get(location.getPredicateIndex());
+            predicate.set(location.getLocationInPredicate(), value);
+        }
+    }
+
+//Auxillary Methods and Constants
+    <a name="variables"/>
+    protected Identifier[] variables = null;
+
+    <a name="checkToSeeIfTrue"/>
+    protected boolean checkToSeeIfTrue()
+        throws ParserException
+    {
+    }
+   
+    <a name="saveResult"/>
+    protected void saveResult()
+        throws ParserException
+    {
+        //We don't save results when evaluating predicate lists.
+        //We will when we evaluate a Query.  This method must be overloaded
+        //in the Query class.
+    }
+
+    <a name="setUpVariableLocMapping"/>
+    protected void setUpVariableLocationMapping()
+    {
+        int predicateLocation = 0;
+        Iterator<Node> nodeIterator = nodes.iterator();
+        while(nodeIterator.hasNext()){
+            Predicate predicate = (Predicate)nodeIterator.next();
+            int argumentLocation = 0;
+            Iterator<Node> argumentIterator = predicate.getNodes().iterator();
+            while(argumentIterator.hasNext()){
+                Argument argument = (Argument)argumentIterator.next();
+                if(argument instanceof Identifier){
+                    Location location = new Location(predicateLocation,
+                                                     argumentLocation);
+                    variableInformation.addLocationFor((Identifier)argument,
+                                                       location);
+                };
+                argumentLocation++;
+            };
+            predicateLocation++;
+        };
+
+    }
+
+    <a name="initializeVariableInfo"/>
+    protected void initializeVariableInformation()
+    {
+        variableInformation = new VariableInformation();
+        setUpVariableLocationMapping();
+    }
+
+    <a name="validSolutionFound"/>
+    protected boolean keepOnGoing(boolean validSolutionFound)
+    {
+        return !validSolutionFound;
+    }
+
+    <a name="allConstants"/>
+    protected boolean allConstants()
+    {
+        boolean result = true;
+        Iterator<Node> iter = nodes.iterator();
+        while(result && iter.hasNext()){
+            result = ((Predicate)iter.next()).allConstants();
+        };
+        return result;
+    }
+
+    //Methods of List that need to be overridden to define a list of
+    // one or more Predicate separated by commas.
+    <a name="createNode"/>
+    protected Node createNode(Lex lex)
+        throws ParserException
+    {
+        return new Predicate(lex);
+    }
+
+    <a name="getSeparator"/>
+    protected Token getSeparator()
+    {
+        return Token.COMMA;
+    }
+}
+</pre>
+</body>
+</html>

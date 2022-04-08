@@ -1,0 +1,9 @@
+Fox(COLOR,appearance,ATTITUDE)? Yes(2)
+  ATTITUDE = 'sly', appearance = 'tail', COLOR = 'red'
+  ATTITUDE = 'sly', appearance = 'tail', COLOR = 'brown'
+gOAT(POSTERITY,DIET)? Yes(3)
+  POSTERITY = 'kids',   DIET = 'cans'
+  POSTERITY = 'kids',   DIET = ''
+  POSTERITY = '',   DIET = ''
+gOAT(POSTERITY,'cans')? Yes(1)
+  POSTERITY = 'kids'   

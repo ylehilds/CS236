@@ -1,0 +1,17 @@
+DeaWoo(A,B,C,D,E)? Yes(3)
+  E='e', C='c', D='d', B='b', A='a'
+  E='a', C='a', D='b', B='b', A='a'
+  E='a', C='a', D='a', B='a', A='a'
+DeaWoo(A,B,C,D,A)? Yes(2)
+  C='a', D='b', B='b', A='a'
+  C='a', D='a', B='a', A='a'
+DeaWoo(A,B,'b',B,A)? No
+DeaWoo(A,B,'a',D,E)? Yes(2)
+ E='a', D='b', B='b', A='a'
+ E='a', D='a', B='a', A='a'
+DeaWoo(A,B,'b',D,E)? No
+DeaWoo('a','a','a','a','a')? Yes(1)
+DeaWoo('b','b','b','b','b')? No
+DeaWoo('a','b','a','b','a')? Yes(1)
+DeaWoo('b','a','b','a','b')? No
+DeaWoo('a','b','c','d','a')? No

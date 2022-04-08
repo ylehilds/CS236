@@ -1,0 +1,17 @@
+Schemes:
+    snap(S,N,A,P)
+    NameHasID(N,S)
+
+Facts:
+    snap('12345','C. Brown','12 Apple St.','555-1234').
+    snap('67890','L. Van Pelt','34 Pear Ave.','555-5678').
+    snap('33333','Snoopy','33 Doghouse.','555-4444').
+
+Rules:
+    NameHasID(N,S):-snap(S,N,A,P).
+
+Queries: 
+    snap('67890','L. Van Pelt','34 Pear Ave.','555-5678')?
+    snap(S,N,A,P)?
+    NameHasID(Name,Id)?
+    NameHasID('Snoopy',Id)?

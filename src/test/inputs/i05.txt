@@ -1,0 +1,9 @@
+Schemes:DeaWoo(A,B,C,D,E,F,G)
+Facts:DeaWoo('a','a','a','a','a','a','b').
+Rules:
+Queries:DeaWoo(A,B,C,D,E,F,G)?
+DeaWoo(A,B,'a',D,E,F,G)?
+DeaWoo(A,B,'b',D,E,F,G)?
+DeaWoo(A,B,'a',D,E,F,A)?
+DeaWoo(A,B,'a',D,E,A,G)?
+DeaWoo('a','a','a','a','a','a','b')?

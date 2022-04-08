@@ -1,0 +1,99 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import lex.Identifier;
+import lex.Lex;
+import lex.Token;
+import lex.TokenType;
+
+
+abstract public class NamedList
+    extends List
+{
+//Domain Implementation
+    // ArrayList<Node> nodes -- implements list
+    //                          inherited from List
+
+    <a name="name"/>
+    protected Identifier name;
+
+//Constructors
+    <a name="DefaultConstructor"/>
+    public NamedList()
+    {
+        super();
+    }
+
+    <a name="LexConstructor"/>
+    public NamedList(Lex lex)
+        throws ParserException
+    {
+        name = (Identifier)checkFor(lex, TokenType.ID);
+        checkFor(lex, TokenType.LEFT_PAREN);
+        createList(lex);
+        checkFor(lex, TokenType.RIGHT_PAREN);
+    }
+
+    <a name="CopyConstructor"/>
+    public NamedList(NamedList namedList)
+        throws ParserException
+    {
+        super(namedList);
+        name = new Identifier(namedList.name);
+    }
+
+//Queries
+    <a name="toString"/>
+    public String toString()
+    {
+        StringBuffer result = new StringBuffer();
+        result.append(name.getValue().toString());
+        result.append("(");
+        result.append(super.toString());
+        result.append(")");
+        return result.toString();
+    }
+
+    <a name="toString"/>
+    public boolean equals(Object object)
+    {
+        boolean result = object != null && object instanceof NamedList;
+        if(result){
+            NamedList namedList = (NamedList)object;
+            result = name.equals(namedList.name) &&
+                     nodes.size() == namedList.nodes.size();
+            Iterator<Node> iter1 = nodes.iterator();
+            Iterator<Node> iter2 = namedList.nodes.iterator();
+            while(result && iter1.hasNext() && iter2.hasNext()){
+                result = iter1.next().equals(iter2.next());
+            };
+        };
+        return result;
+    }
+
+    <a name="getName"/>
+    public Identifier getName()
+    {
+        return name;
+    }
+
+//Commands
+
+//Auxillary Methods and Constants
+    //-------------------------------------------------------------------------
+    //Methods of the class List that need to be overridden.
+    //-------------------------------------------------------------------------
+    <a name="getSeparator"/>
+    protected Token getSeparator()
+    {
+        return Token.COMMA;
+    }
+}
+</pre>
+</body>
+</html>

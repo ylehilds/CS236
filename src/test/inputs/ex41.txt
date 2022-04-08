@@ -1,0 +1,9 @@
+Schemes:
+  S(A,B,C)
+Facts:
+  S('a','a','a').
+  S('a','b','b').
+Rules:
+  DoNothing(Z) :- Stuff(Z).
+Queries:
+  S(A,'a',B)?

@@ -1,0 +1,55 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
+import lex.Constant;
+
+
+public class LocationsAndValue
+    extends Locations
+{
+//Domain Implementation
+//  HashSet<Location> locations -- inherited from Locations
+
+    <a name="value"/>
+    protected Constant value = null;
+    
+
+//Constructors
+    <a name="DefaultConstructor"/>
+    public LocationsAndValue()
+    {
+        super();
+    }
+
+    <a name="CopyConstructor"/>
+    public LocationsAndValue(LocationsAndValue locs)
+    {
+        super(locs);
+        value = locs.value;
+    }
+
+
+//Queries
+    <a name="getValue"/>
+    public Constant getValue()
+    {
+        return value;
+    }
+
+//Commands
+    <a name="setValue"/>
+    public void setValue(Constant value)
+    {
+        assert value != null;
+
+        this.value = value;
+    }
+}
+</pre>
+</body>
+</html>

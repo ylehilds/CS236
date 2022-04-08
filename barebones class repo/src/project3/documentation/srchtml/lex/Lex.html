@@ -1,0 +1,188 @@
+<html>
+<body>
+<pre>
+package lex;
+
+import java.io.StringReader;
+
+import project3.ParserException;
+
+
+public class Lex
+{
+//Domain Implementation
+    // We implement tokens by storeing tokens[0..|tokens-1|] in the variable
+    // file and storing tokens[0] in the one token buffer "token".
+
+    <a name="file"/>
+    protected File         file  = null;
+
+    <a name="token"/>
+    protected Token        token = null;
+
+//Constructors
+    <a name="defaultConstructor"/>
+    public Lex()
+        throws ParserException
+    {
+        file = new File();
+        popFront();
+    }
+
+    <a name="StdConstructor"/>
+    public Lex(String fileName)
+        throws ParserException
+    {
+        file = new File(fileName);
+        popFront();
+    }
+
+    <a name="TestConstructor"/>
+    public Lex(StringReader stringReader)
+        throws ParserException
+    {
+        file = new File(stringReader);
+        popFront();
+    }
+
+
+//Queries
+    <a name="front"/>
+    public Token front()
+    {
+        return token;
+    }
+   
+
+//Commands
+    <a name="popFront"/>
+    public void popFront()
+        throws ParserException
+    {
+        skipWhiteSpace();
+        if(file.front() == file.EOF){  
+            token = new Token(TokenType.EOF, "", file.getLineNumber());
+        } else if(file.front() == '\''){
+            token = getConstant();
+        } else if(Character.isLetter(file.front())){
+            token = getIdentifierOrKeyword();
+        } else if(file.front() == ':'){ //process ":-" or ":'
+            int line = file.getLineNumber();
+            file.popFront();
+            if(file.front() == '-'){
+                file.popFront();
+                token = new Token(TokenType.COLON_DASH, ":-", line);
+            } else {
+                token = new Token(TokenType.COLON, ":", line);
+            };
+        } else { //process single character tokens
+            int line = file.getLineNumber();
+            switch(file.front()){
+                case ',': token = new Token(TokenType.COMMA, ",", line);
+                          break;
+                case '.': token = new Token(TokenType.PERIOD, ".", line);
+                          break;
+                case '(': token = new Token(TokenType.LEFT_PAREN,"(",line);
+                          break;
+                case ')': token = new Token(TokenType.RIGHT_PAREN,")",
+                                             line);
+                          break;
+                case '?': token = new Token(TokenType.Q_MARK, "?", line);
+                          break;
+                default:  throw new ParserException(
+                             "Error on line " + line + ".\n" +
+                              "Invalid character, '" + file.front() + 
+                              "', found.");
+            };
+            file.popFront();
+        };
+    }
+
+//Auxillary Methods
+    <a name="skipWhitespace"/>
+    protected void skipWhiteSpace()
+    {
+        while(Character.isWhitespace(file.front())){
+            file.popFront();
+        };
+    }
+
+
+    <a name="getConstant"/>
+    protected Constant getConstant()
+        throws ParserException
+    {
+        //PreCondition: file.front() == '\''
+        int line = file.getLineNumber();
+        if(file.front() != '\'')
+            throw new ParserException("Error on line " + line + ".\n" +
+                                "A string must start with a '.");
+
+
+        file.popFront(); // throw away the leading quote
+
+        StringBuffer result = new StringBuffer();
+        boolean foundEnd = false;
+        while(!foundEnd && file.front() != file.EOF){
+            if(file.front() == '\''){
+                file.popFront();
+                if(file.front() == '\''){  //found a legal double quote
+                    result.append('\'');
+                    file.popFront();
+                } else {
+                    foundEnd = true;       //found the end of the quote
+                };
+            } else {
+                result.append(file.front());
+                file.popFront();
+            };
+        };
+       
+        Constant resultToken = null;
+        if(foundEnd){
+            resultToken = new Constant(result.toString(),line);
+        } else {
+            throw new ParserException("Error on line " + line + ".\n" +
+                                "Unterminated string found");
+        };
+        return resultToken;
+    }
+
+    <a name="getId"/>
+    protected Token getIdentifierOrKeyword()
+        throws ParserException
+    {
+
+        //The string may cover many lines, but, the lineNumber of the token
+        //is where the token starts. So, we get the lineNumber before we do
+        //anything else.
+        int line = file.getLineNumber();
+
+        StringBuffer result = new StringBuffer();
+        while(Character.isLetterOrDigit(file.front())){
+            result.append(file.front());
+            file.popFront();
+        };
+            
+        String value = result.toString(); 
+
+        //This checks to see if the identifier is actually a key word.:wq
+        Token resultToken = null;
+        if(value.equalsIgnoreCase("Schemes")){
+            resultToken = new Token(TokenType.SCHEMES, value, line);
+        } else if(value.equalsIgnoreCase("Facts")){
+            resultToken = new Token(TokenType.FACTS, value, line);
+        } else if(value.equalsIgnoreCase("Rules")){
+            resultToken = new Token(TokenType.RULES, value, line);
+        } else if(value.equalsIgnoreCase("Queries")){
+            resultToken = new Token(TokenType.QUERIES, value, line);
+        } else {
+            resultToken = new Identifier(value, line);
+        };
+
+        return resultToken;
+    }
+}
+</pre>
+</body>
+</html>

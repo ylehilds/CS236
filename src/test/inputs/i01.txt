@@ -1,0 +1,6 @@
+Schemes:
+    SK(A,B)
+Facts:
+Rules:
+Queries:
+    SK(A,'c')?

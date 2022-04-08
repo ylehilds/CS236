@@ -1,0 +1,17 @@
+Schemes:
+name(t,h,i,s)
+Facts:
+name('1','1','1','1').
+name('2','1','1','1').
+name('2','2','1','1').
+name('2','2','2','1').
+name('2','2','3','3').
+Rules:
+Queries:
+name(t,t,t,t)?
+name(s,s,s,'1')?
+name('2',t,s,'3')?
+name(p,p,q,r)?
+name(p,p,'1',q)?
+
+

@@ -1,0 +1,652 @@
+Testsuite: testproject3.TestProject3Suite
+Tests run: 49, Failures: 0, Errors: 0, Time elapsed: 177.548 sec
+
+------------- Standard Output ---------------
+LocationTest PASSED
+LocationsTest PASSED
+LocationsAndValueTest PASSED
+VariableInformationTest PASSED
+QueryVariableInformationTest PASSED
+SetOfSolutionsTest PASSED
+FactListTest PASSED
+HeadTest PASSED
+PredicateListTest PASSED
+QueryTest (26 parts)
+	1 PASSED
+	2 PASSED
+	3 PASSED
+	4 PASSED
+	5 PASSED
+	6 PASSED
+	7 PASSED
+	8 PASSED
+	9 PASSED
+	10 PASSED
+	11 PASSED
+	12 PASSED
+	13 PASSED
+	14 PASSED
+	15 PASSED
+	16 PASSED
+	17 PASSED
+	18 PASSED
+	19 PASSED
+	20 PASSED
+	21 PASSED
+	22 PASSED
+	23 PASSED
+	24 PASSED
+	25 PASSED
+	26 PASSED
+QueryListTest PASSED
+RuleTest PASSED
+PredicateListTest PASSED
+DatalogProgramTest PASSED
+******************** TEST1 ********************
+ 
+********** STUDENT OUTPUT **********
+SK(A,'c')? No
+
+ 
+********** EXPECTED RESULT **********
+SK(A,'c')? No
+
+ 
+******************** TEST2 ********************
+ 
+********** STUDENT OUTPUT **********
+SK(A,'c')? Yes(2)
+  A='a'
+  A='b'
+SK('b','c')? Yes(1)
+SK('c','c')? No
+SK(A,B)? Yes(3)
+  B='b', A='a'
+  B='c', A='a'
+  B='c', A='b'
+
+ 
+********** EXPECTED RESULT **********
+SK(A,'c')? Yes(2)
+A = 'b'   
+A = 'a'   
+SK('b','c')? Yes(1)
+SK('c','c')? No
+SK(A,B)? Yes(3)
+B = 'c',   A = 'b'
+B = 'c',   A = 'a'
+B = 'b',   A = 'a'
+
+ 
+******************** TEST3 ********************
+ 
+********** STUDENT OUTPUT **********
+WhoToBlame('Dilbert',Job)? Yes(1)
+  Job='EE'
+WhoToBlame(Name,'EE')? Yes(1)
+  Name='Dilbert'
+employee(Name,Id,Address,'EE')? Yes(2)
+  Name='Dilbert', Id='51', Address='10 Main'
+  Name='Dogbert', Id='52', Address='10 Main'
+
+ 
+********** EXPECTED RESULT **********
+WhoToBlame('Dilbert',Job)? Yes(1)
+Job = 'EE'
+WhoToBlame(Name,'EE')? Yes(1)
+Name = 'Dilbert'   
+employee(Name,Id,Address,'EE')? Yes(2)
+  Id = '52', Address = '10 Main',   Name = 'Dogbert'
+  Id = '51', Address = '10 Main',   Name = 'Dilbert'
+
+ 
+******************** TEST4 ********************
+ 
+********** STUDENT OUTPUT **********
+Fox(COLOR,appearance,ATTITUDE)? Yes(2)
+  ATTITUDE='sly', COLOR='red', appearance='tail'
+  ATTITUDE='sly', COLOR='brown', appearance='tail'
+gOAT(POSTERITY,DIET)? Yes(3)
+  DIET='', POSTERITY=''
+  DIET='', POSTERITY='kids'
+  DIET='cans', POSTERITY='kids'
+gOAT(POSTERITY,'cans')? Yes(1)
+  POSTERITY='kids'
+
+ 
+********** EXPECTED RESULT **********
+Fox(COLOR,appearance,ATTITUDE)? Yes(2)
+  ATTITUDE = 'sly', appearance = 'tail', COLOR = 'red'
+  ATTITUDE = 'sly', appearance = 'tail', COLOR = 'brown'
+gOAT(POSTERITY,DIET)? Yes(3)
+  POSTERITY = 'kids',   DIET = 'cans'
+  POSTERITY = 'kids',   DIET = ''
+  POSTERITY = '',   DIET = ''
+gOAT(POSTERITY,'cans')? Yes(1)
+  POSTERITY = 'kids'   
+
+ 
+******************** TEST5 ********************
+ 
+********** STUDENT OUTPUT **********
+DeaWoo(A,B,C,D,E,F,G)? Yes(1)
+  D='a', E='a', B='a', C='a', F='a', G='b', A='a'
+DeaWoo(A,B,'a',D,E,F,G)? Yes(1)
+  D='a', E='a', B='a', F='a', G='b', A='a'
+DeaWoo(A,B,'b',D,E,F,G)? No
+DeaWoo(A,B,'a',D,E,F,A)? No
+DeaWoo(A,B,'a',D,E,A,G)? Yes(1)
+  D='a', E='a', B='a', G='b', A='a'
+DeaWoo('a','a','a','a','a','a','b')? Yes(1)
+
+ 
+********** EXPECTED RESULT **********
+DeaWoo(A,B,C,D,E,F,G)? Yes(1)
+  E = 'a', G = 'b', C = 'a', D = 'a', F = 'a', B = 'a', A = 'a'
+DeaWoo(A,B,'a',D,E,F,G)? Yes(1)
+  E = 'a', G = 'b', D = 'a', F = 'a', B = 'a', A = 'a'
+DeaWoo(A,B,'b',D,E,F,G)? No
+DeaWoo(A,B,'a',D,E,F,A)? No
+DeaWoo(A,B,'a',D,E,A,G)? Yes(1)
+   E = 'a', G = 'b', D = 'a', B = 'a', A = 'a'
+DeaWoo('a','a','a','a','a','a','b')? Yes(1)
+
+ 
+******************** TEST6 ********************
+ 
+********** STUDENT OUTPUT **********
+snap(S,'Snoopy',A,P)? Yes(1)
+  S='33333', P='555-1234', A='12 Apple'
+csg(Course,'33333',Grade)? Yes(2)
+  Grade='B', Course='EE200'
+  Grade='A-', Course='CS101'
+cr('CS101','Auditorium')? Yes(1)
+cdh('EE200','F',Hour)? No
+csg(Course,Id,Grade)? Yes(7)
+  Grade='B+', Id='22222', Course='EE200'
+  Grade='C', Id='12345', Course='EE200'
+  Grade='B', Id='67890', Course='CS101'
+  Grade='B', Id='33333', Course='EE200'
+  Grade='A', Id='12345', Course='CS101'
+  Grade='A-', Id='33333', Course='CS101'
+  Grade='C+', Id='67890', Course='PH100'
+cdh(Course,Day,Hour)? Yes(4)
+  Hour='10AM', Course='EE200', Day='M'
+  Hour='10AM', Course='EE200', Day='W'
+  Hour='11AM', Course='PH100', Day='Tu'
+  Hour='9PM', Course='CS101', Day='F'
+cr(Course,Room)? Yes(3)
+  Room='25 Ohm Hall', Course='EE200'
+  Room='Newton Lab', Course='PH100'
+  Room='Auditorium', Course='CS101'
+
+ 
+********** EXPECTED RESULT **********
+snap(S,'Snoopy',A,P)? Yes(1)
+S = '33333',   A = '12 Apple',   P = '555-1234'
+csg(Course,'33333',Grade)? Yes(2)
+Course = 'EE200',  Grade = 'B'
+Course = 'CS101',   Grade = 'A-'
+cr('CS101','Auditorium')? Yes(1)
+cdh('EE200','F',Hour)? No
+csg(Course,Id,Grade)? Yes(7)
+   Id = '67890', Course = 'CS101', Grade = 'B'
+   Id = '67890', Course = 'PH100', Grade = 'C+'
+   Id = '12345', Course = 'EE200', Grade = 'C'
+   Id = '12345', Course = 'CS101', Grade = 'A'
+   Id = '33333', Course = 'EE200', Grade = 'B'
+   Id = '33333', Course = 'CS101', Grade = 'A-'
+   Id = '22222', Course = 'EE200', Grade = 'B+'
+cdh(Course,Day,Hour)? Yes(4)
+  Day = 'M', Course = 'EE200', Hour = '10AM'
+  Day = 'Tu', Course = 'PH100', Hour = '11AM'
+  Day = 'F', Course = 'CS101', Hour = '9PM'
+  Day = 'W', Course = 'EE200', Hour = '10AM'
+cr(Course,Room)? Yes(3)
+  Course = 'EE200',   Room = '25 Ohm Hall'
+  Course = 'CS101',   Room = 'Auditorium'
+  Course = 'PH100',   Room = 'Newton Lab'
+
+ 
+******************** TEST7 ********************
+ 
+********** STUDENT OUTPUT **********
+snap('33333','Snoopy','12 Apple St.','555-1234')? Yes(1)
+snap(S,'Snoopy',A,P)? Yes(1)
+  S='33333', P='555-1234', A='12 Apple St.'
+csg(C,'33333',G)? Yes(2)
+  C='CS101', G='A-'
+  C='EE200', G='B'
+snap(S,N,A,P)? Yes(4)
+  S='67890', P='555-5678', A='34 Pear Ave.', N='L. Van Pelt'
+  S='33333', P='555-1234', A='12 Apple St.', N='Snoopy'
+  S='22222', P='555-9999', A='56 Grape Blvd.', N='P. Patty'
+  S='12345', P='555-1234', A='12 Apple St.', N='C. Brown'
+csg(C,S,G)? Yes(7)
+  S='67890', C='CS101', G='B'
+  S='67890', C='PH100', G='C+'
+  S='33333', C='CS101', G='A-'
+  S='33333', C='EE200', G='B'
+  S='22222', C='EE200', G='B+'
+  S='12345', C='CS101', G='A'
+  S='12345', C='EE200', G='C'
+cp(C,Q)? Yes(8)
+  C='CS121', Q='CS120'
+  C='CS120', Q='CS101'
+  C='CS101', Q='CS100'
+  C='CS205', Q='CS101'
+  C='CS206', Q='CS121'
+  C='CS206', Q='CS205'
+  C='EE200', Q='EE005'
+  C='EE200', Q='CS100'
+cdh(C,D,H)? Yes(4)
+  D='W', C='EE200', H='1PM'
+  D='Th', C='EE200', H='10AM'
+  D='Tu', C='EE200', H='10AM'
+  D='Tu', C='PH100', H='11AM'
+cr(C,R)? Yes(3)
+  R='Turing Aud.', C='CS101'
+  R='25 Ohm Hall', C='EE200'
+  R='Newton Lab.', C='PH100'
+
+ 
+********** EXPECTED RESULT **********
+snap('33333','Snoopy','12 Apple St.','555-1234')? Yes(1)
+snap(S,'Snoopy',A,P)? Yes(1)
+S = '33333',   A = '12 Apple St.',   P = '555-1234'
+csg(C,'33333',G)? Yes(2)
+  G = 'B', C = 'EE200'
+  G = 'A-', C = 'CS101'
+snap(S,N,A,P)? Yes(4)
+  S = '67890', A = '34 Pear Ave.', N = 'L. Van Pelt', P = '555-5678'
+  S = '12345', A = '12 Apple St.', N = 'C. Brown', P = '555-1234'
+  S = '33333', A = '12 Apple St.', N = 'Snoopy', P = '555-1234'
+  S = '22222', A = '56 Grape Blvd.', N = 'P. Patty', P = '555-9999'
+csg(C,S,G)? Yes(7)
+   G = 'B', C = 'EE200', S = '33333'
+   G = 'B', C = 'CS101', S = '67890'
+   G = 'C+', C = 'PH100', S = '67890'
+   G = 'C', C = 'EE200', S = '12345'
+   G = 'A', C = 'CS101', S = '12345'
+   G = 'A-', C = 'CS101', S = '33333'
+   G = 'B+', C = 'EE200', S = '22222'
+cp(C,Q)? Yes(8)
+C = 'CS120',  Q = 'CS101'
+C = 'EE200',  Q = 'CS100'
+C = 'EE200',  Q = 'EE005'
+C = 'CS101',  Q = 'CS100'
+C = 'CS206',  Q = 'CS121'
+C = 'CS206',  Q = 'CS205'
+C = 'CS121',  Q = 'CS120'
+C = 'CS205',  Q = 'CS101'
+cdh(C,D,H)? Yes(4)
+  H = '1PM', C = 'EE200',  D = 'W'
+  H = '10AM', C = 'EE200',  D = 'Th'
+  H = '10AM', C = 'EE200',  D = 'Tu'
+  H = '11AM', C = 'PH100',  D = 'Tu'
+cr(C,R)? Yes(3)
+   R = 'Newton Lab.', C = 'PH100'
+   R = 'Turing Aud.', C = 'CS101'
+   R = '25 Ohm Hall', C = 'EE200'
+
+ 
+******************** TEST8 ********************
+ 
+********** STUDENT OUTPUT **********
+snap('67890','Van Pelt','34 Pear','555-5678')? Yes(1)
+snap(S,N,A,P)? Yes(2)
+  S='67890', P='555-5678', A='34 Pear', N='Van Pelt'
+  S='12345', P='555-1234', A='12 Apple', N='Snoopy'
+NameHasID('Snoopy',Id)? Yes(1)
+  Id='12345'
+NameHasID(Name,'67890')? Yes(1)
+  Name='Van Pelt'
+NameHasID('Snoopy','67890')? No
+
+ 
+********** EXPECTED RESULT **********
+snap('67890','Van Pelt','34 Pear','555-5678')? Yes(1)
+snap(S,N,A,P)? Yes(2)
+  S='12345', A='12 Apple', N='Snoopy', P='555-1234'
+  S='67890', A='34 Pear', N='Van Pelt', P='555-5678'
+NameHasID('Snoopy',Id)? Yes(1)
+  Id='12345'
+NameHasID(Name,'67890')? Yes(1)
+  Name='Van Pelt'
+NameHasID('Snoopy','67890')? No
+
+ 
+******************** TEST9 ********************
+ 
+********** STUDENT OUTPUT **********
+employee(Name,ID,Address,Phone)? Yes(3)
+  ID='53', Phone='666-6666', Name='PHB', Address='Hades'
+  ID='52', Phone='555-9999', Name='Dogbert', Address='10 Main'
+  ID='51', Phone='555-1212', Name='Dilbert', Address='10 Main'
+WhoToBlame(Name,Job)? Yes(4)
+  Name='PHB', Job='Pain Management'
+  Name='Dilbert', Job='EE'
+  Name='Dilbert', Job='Marketing'
+  Name='Dogbert', Job='EE'
+WhoToBlame('Dilbert',Job)? Yes(2)
+  Job='EE'
+  Job='Marketing'
+WhoToBlame(Name,'EE')? Yes(2)
+  Name='Dilbert'
+  Name='Dogbert'
+WhoToBlame('Dilbert','Marketing')? Yes(1)
+
+ 
+********** EXPECTED RESULT **********
+employee(Name,ID,Address,Phone)? Yes(3)
+ ID='53', Address='Hades', Name='PHB', Phone='666-6666'
+ ID='52', Address='10 Main', Name='Dogbert', Phone='555-9999'
+ ID='51', Address='10 Main', Name='Dilbert', Phone='555-1212'
+WhoToBlame(Name,Job)? Yes(4)
+  Job='EE', Name='Dilbert'
+  Job='EE', Name='Dogbert'
+  Job='Pain Management', Name='PHB'
+  Job='Marketing', Name='Dilbert'
+WhoToBlame('Dilbert',Job)? Yes(2)
+  Job='EE'
+  Job='Marketing'
+WhoToBlame(Name,'EE')? Yes(2)
+  Name='Dilbert'
+  Name='Dogbert'
+WhoToBlame('Dilbert','Marketing')? Yes(1)
+
+ 
+******************** TEST10 ********************
+ 
+********** STUDENT OUTPUT **********
+f(A,B)? Yes(2)
+  B='2', A='1'
+  B='3', A='4'
+g(A,B)? Yes(4)
+  B='1', A='1'
+  B='2', A='3'
+  B='4', A='4'
+  B='5', A='4'
+r(A,B)? Yes(5)
+  B='1', A='2'
+  B='2', A='1'
+  B='3', A='4'
+  B='4', A='3'
+  B='5', A='3'
+g('4',B)? Yes(2)
+  B='4'
+  B='5'
+r(E,'3')? Yes(1)
+  E='4'
+g('3','1')? No
+
+ 
+********** EXPECTED RESULT **********
+f(A,B)? Yes(2)
+ B='2', A='1'
+ B='3', A='4'
+g(A,B)? Yes(4)
+ B='2', A='3'
+ B='4', A='4'
+ B='1', A='1'
+ B='5', A='4'
+r(A,B)? Yes(5)
+ B='2', A='1'
+ B='4', A='3'
+ B='1', A='2'
+ B='3', A='4'
+ B='5', A='3'
+g('4',B)? Yes(2)
+  B='4'
+  B='5'
+r(E,'3')? Yes(1)
+  E='4'
+g('3','1')? No
+
+ 
+******************** TEST11 ********************
+ 
+********** STUDENT OUTPUT **********
+DeaWoo(A,B,C,D,E)? Yes(3)
+  D='a', E='a', B='a', C='a', A='a'
+  D='b', E='a', B='b', C='a', A='a'
+  D='d', E='e', B='b', C='c', A='a'
+DeaWoo(A,B,C,D,A)? Yes(2)
+  D='a', B='a', C='a', A='a'
+  D='b', B='b', C='a', A='a'
+DeaWoo(A,B,'b',B,A)? No
+DeaWoo(A,B,'a',D,E)? Yes(2)
+  D='a', E='a', B='a', A='a'
+  D='b', E='a', B='b', A='a'
+DeaWoo(A,B,'b',D,E)? No
+DeaWoo('a','a','a','a','a')? Yes(1)
+DeaWoo('b','b','b','b','b')? No
+DeaWoo('a','b','a','b','a')? Yes(1)
+DeaWoo('b','a','b','a','b')? No
+DeaWoo('a','b','c','d','a')? No
+
+ 
+********** EXPECTED RESULT **********
+DeaWoo(A,B,C,D,E)? Yes(3)
+  E='e', C='c', D='d', B='b', A='a'
+  E='a', C='a', D='b', B='b', A='a'
+  E='a', C='a', D='a', B='a', A='a'
+DeaWoo(A,B,C,D,A)? Yes(2)
+  C='a', D='b', B='b', A='a'
+  C='a', D='a', B='a', A='a'
+DeaWoo(A,B,'b',B,A)? No
+DeaWoo(A,B,'a',D,E)? Yes(2)
+ E='a', D='b', B='b', A='a'
+ E='a', D='a', B='a', A='a'
+DeaWoo(A,B,'b',D,E)? No
+DeaWoo('a','a','a','a','a')? Yes(1)
+DeaWoo('b','b','b','b','b')? No
+DeaWoo('a','b','a','b','a')? Yes(1)
+DeaWoo('b','a','b','a','b')? No
+DeaWoo('a','b','c','d','a')? No
+
+ 
+******************** TEST12 ********************
+ 
+********** STUDENT OUTPUT **********
+marriedTo(X,Y)? Yes(2)
+  Y='Bea', X='Zed'
+  Y='Zed', X='Bea'
+childOf(Child,Parent)? Yes(6)
+  Child='Ned', Parent='Bea'
+  Child='Ned', Parent='Zed'
+  Child='Tim', Parent='Bea'
+  Child='Tim', Parent='Zed'
+  Child='Jill', Parent='Bea'
+  Child='Jill', Parent='Zed'
+childOf('Jill','Bea')? Yes(1)
+childOf('Ned','Zed')? Yes(1)
+childOf('Tim','Zed')? Yes(1)
+childOf('Bea','Zed')? No
+childOf(X,'Zed')? Yes(3)
+  X='Ned'
+  X='Tim'
+  X='Jill'
+marriedTo('Bea',X)? Yes(1)
+  X='Zed'
+marriedTo('Bea','Zed')? Yes(1)
+
+ 
+********** EXPECTED RESULT **********
+marriedTo(X,Y)? Yes(2)
+  Y='Zed', X='Bea'
+  Y='Bea', X='Zed'
+childOf(Child,Parent)? Yes(6)
+  Child='Tim', Parent='Zed'
+  Child='Tim', Parent='Bea'
+  Child='Ned', Parent='Zed'
+  Child='Ned', Parent='Bea'
+  Child='Jill', Parent='Zed'
+  Child='Jill', Parent='Bea'
+childOf('Jill','Bea')? Yes(1)
+childOf('Ned','Zed')? Yes(1)
+childOf('Tim','Zed')? Yes(1)
+childOf('Bea','Zed')? No
+childOf(X,'Zed')? Yes(3)
+  X='Tim'
+  X='Ned'
+  X='Jill'
+marriedTo('Bea',X)? Yes(1)
+  X='Zed'
+marriedTo('Bea','Zed')? Yes(1)
+
+ 
+******************** TEST13 ********************
+ 
+********** STUDENT OUTPUT **********
+F(A,B)? Yes(5)
+  B='1', A='2'
+  B='2', A='3'
+  B='2', A='1'
+  B='2', A='3'
+  B='3', A='2'
+G(A,B)? Yes(3)
+  B='2', A='3'
+  B='2', A='3'
+  B='3', A='2'
+H(A,B)? Yes(3)
+  B='2', A='3'
+  B='2', A='3'
+  B='3', A='2'
+F('2',B)? Yes(2)
+  B='1'
+  B='3'
+G(A,'2')? Yes(1)
+  A='3'
+G('2','2')? No
+
+ 
+********** EXPECTED RESULT **********
+F(A,B)? Yes(4)
+  B='2', A='1'
+  B='2', A='3'
+  B='1', A='2'
+  B='3', A='2'
+G(A,B)? Yes(2)
+  B='2', A='3'
+  B='3', A='2'
+H(A,B)? Yes(2)
+  B='2', A='3'
+  B='3', A='2'
+F('2',B)? Yes(2)
+  B='1'
+  B='3'
+G(A,'2')? Yes(1)
+  A='3'
+G('2','2')? No
+
+ 
+******************** TEST14 ********************
+ 
+********** STUDENT OUTPUT **********
+WhoToBlame('Dilbert',Job)? Yes(2)
+  Job='EE'
+  Job='Marketing'
+WhoToBlame(Name,'EE')? Yes(2)
+  Name='Dilbert'
+  Name='Dogbert'
+Salary('Dilbert',Pay)? Yes(2)
+  Pay='60k'
+  Pay='15k'
+Salary('PHB','60k')? No
+
+ 
+********** EXPECTED RESULT **********
+WhoToBlame('Dilbert',Job)? Yes(2)
+  Job='EE'
+  Job='Marketing'
+WhoToBlame(Name,'EE')? Yes(2)
+  Name='Dilbert'
+  Name='Dogbert'
+Salary('Dilbert',Pay)? Yes(2)
+  Pay='15k'
+  Pay='60k'
+Salary('PHB','60k')? No
+
+ 
+******************** TEST15 ********************
+ 
+********** STUDENT OUTPUT **********
+snap(Id,'Snoopy',Address,Phone)? Yes(1)
+  Phone='555-1234', Id='67890', Address='12 Apple St.'
+csg(Course,'12345',Grade)? Yes(2)
+  Grade='C', Course='EE200'
+  Grade='A', Course='CS101'
+cdh('EE200',Day,Hour)? Yes(1)
+  Hour='10AM', Day='M'
+cr('CS101',Room)? Yes(1)
+  Room='Turing Aud.'
+Grades('Snoopy',Course,Grade)? Yes(2)
+  Grade='C+', Course='PH100'
+  Grade='B', Course='CS101'
+Students('EE200','25 Ohm Hall','Brown','12345',G)? Yes(1)
+  G='C'
+Schedule('Snoopy','CS101',R,'Tu','10AM')? Yes(1)
+  R='Turing Aud.'
+
+ 
+********** EXPECTED RESULT **********
+snap(Id,'Snoopy',Address,Phone)? Yes(1)
+  Id='67890', Address='12 Apple St.', Phone='555-1234'
+csg(Course,'12345',Grade)? Yes(2)
+  Course='CS101', Grade='A'
+  Course='EE200', Grade='C'
+cdh('EE200',Day,Hour)? Yes(1)
+  Day='M', Hour='10AM'
+cr('CS101',Room)? Yes(1)
+  Room='Turing Aud.'
+Grades('Snoopy',Course,Grade)? Yes(2)
+  Course='CS101', Grade='B'
+  Course='PH100', Grade='C+'
+Students('EE200','25 Ohm Hall','Brown','12345',G)? Yes(1)
+  G='C'
+Schedule('Snoopy','CS101',R,'Tu','10AM')? Yes(1)
+  R='Turing Aud.'
+
+ 
+******************** TEST16 ********************
+ 
+********** STUDENT OUTPUT **********
+g('3','1')? Yes(1)
+all(A,B)? Yes(11)
+  B='1', A='1'
+  B='1', A='2'
+  B='1', A='3'
+  B='2', A='3'
+  B='2', A='1'
+  B='2', A='2'
+  B='2', A='3'
+  B='3', A='3'
+  B='3', A='1'
+  B='3', A='2'
+  B='3', A='3'
+all(A,A)? Yes(3)
+  A='1'
+  A='2'
+  A='3'
+
+ 
+********** EXPECTED RESULT **********
+g('3','1')? Yes(1)
+all(A,B)? Yes(9)
+  B = '3', A = '3'
+  B = '3', A = '1'
+  B = '3', A = '2'
+  B = '1', A = '3'
+  B = '1', A = '1'
+  B = '1', A = '2'
+  B = '2', A = '3'
+  B = '2', A = '1'
+  B = '2', A = '2'
+all(A,A)? Yes(3)
+  A = '3'
+  A = '1'
+  A = '2'
+
+ 
+------------- ---------------- ---------------

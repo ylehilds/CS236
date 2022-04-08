@@ -1,0 +1,105 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import lex.Argument;
+import lex.Constant;
+import lex.Identifier;
+import lex.Lex;
+import lex.TokenType;
+import lex.Argument;
+
+
+public class Predicate
+    extends NamedList
+{
+//Domain Implementation
+    // Identifier name     -- inherited from NamedList
+    //                     -- implements predicateName
+    // ArrayList<Argument> -- inherited from List
+    //                        implements Sequence<Argument>
+
+
+//Constructors
+    <a name="LexConstructor"/>
+    public Predicate(Lex lex)
+        throws ParserException
+    {
+        super(lex);
+    }
+
+    <a name="CopyConstructor"/>
+    public Predicate(Predicate predicate)
+        throws ParserException
+    {
+        super();
+        Iterator<Node> iter = predicate.nodes.iterator();
+        while(iter.hasNext()){
+            nodes.add(Argument.createCopy((Argument)iter.next()));
+        };
+        name = new Identifier(predicate.name);
+    }
+
+//Queries
+    <a name="allConstants"/>
+    public boolean allConstants()
+    {
+        boolean result = true;
+        Iterator<Node> iter = nodes.iterator();
+        while(result && iter.hasNext()){
+            result = iter.next() instanceof Constant;
+        };
+        return result;
+    }
+
+    <a name="hashCode"/>
+    public int hashCode()
+    {
+        long sum = 0;
+        Iterator<Node> iter = nodes.iterator();
+        while(iter.hasNext()){
+            sum += (long)((Argument)iter.next()).hashCode();
+        };
+        int result = (int)sum;
+        return result;
+    }
+
+//Commands
+    <a name="set"/>
+    public void set(int index, Constant value)
+    {
+         nodes.set(index, value);
+    }
+
+
+//Auxillary Methods and Constants
+    //Methods that need to be overridden to define a Predicate
+
+    <a name="createNode"/>
+    protected Node createNode(Lex lex)
+        throws ParserException
+    {
+        if(!(lex.front() instanceof Argument))throw new ParserException(
+            "ERROR in Predicate::createNode(Lex)\n" +
+            "   the lex.front() must be either a identifier or a constant");
+        
+        Node result = lex.front();
+        lex.popFront();
+        return result;
+    }
+
+    <a name="isInFirstOfListElement"/>
+    protected boolean isInFirstOfListElement(Lex lex)
+    {
+        assert lex != null;
+
+        return lex.front() instanceof Argument;
+    }
+}
+</pre>
+</body>
+</html>

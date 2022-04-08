@@ -1,0 +1,16 @@
+employee(Name,ID,Address,Phone)? Yes(3)
+ ID='53', Address='Hades', Name='PHB', Phone='666-6666'
+ ID='52', Address='10 Main', Name='Dogbert', Phone='555-9999'
+ ID='51', Address='10 Main', Name='Dilbert', Phone='555-1212'
+WhoToBlame(Name,Job)? Yes(4)
+  Job='EE', Name='Dilbert'
+  Job='EE', Name='Dogbert'
+  Job='Pain Management', Name='PHB'
+  Job='Marketing', Name='Dilbert'
+WhoToBlame('Dilbert',Job)? Yes(2)
+  Job='EE'
+  Job='Marketing'
+WhoToBlame(Name,'EE')? Yes(2)
+  Name='Dilbert'
+  Name='Dogbert'
+WhoToBlame('Dilbert','Marketing')? Yes(1)

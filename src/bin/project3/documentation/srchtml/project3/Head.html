@@ -1,0 +1,79 @@
+<html>
+<body>
+<pre>
+package project3;
+
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import lex.Constant;
+import lex.Identifier;
+import lex.Lex;
+import lex.Token;
+import lex.TokenType;
+
+
+public class Head
+    extends Scheme
+{
+//Domain Implementation
+//  Identifier name       -- inherited indirectly from List
+//  ArrayList<Node> nodes -- inherited indirectly from List,
+//                        -- this implements Sequence<Identifier>.
+//                        -- Scheme guarantees that every element in the
+//                        -- list is an Identifier
+
+//Constructor
+    <a name="LexConstructor"/>
+    public Head(Lex lex)
+        throws ParserException
+    {
+        super(lex);
+    }
+
+//Queries
+    <a name="unify"/>
+    public HashMap<Identifier, Constant> unify(Predicate predicate)
+    {
+        assert predicate != null;
+        assert predicate.size() == this.size();
+        assert allConstants(predicate);
+
+        HashMap<Identifier, Constant> result =
+            new HashMap<Identifier, Constant>();
+
+        for(int i = 0; i < nodes.size(); i++){
+            result.put((Identifier)nodes.get(i),
+                       (Constant)predicate.getNodes().get(i));            
+        };
+
+        return result;
+    }
+
+    <a name="matches"/>
+    public boolean matches(Predicate predicate)
+    {
+        boolean result = name.equals(predicate.getName()) &&
+                         nodes.size() == predicate.getNodes().size();
+        return result;
+    }
+
+//Commands
+
+//Auxiallary Methods and Constants
+    <a name="allConstants"/>
+    private boolean allConstants(Predicate predicate)
+    {
+        assert predicate != null;
+        boolean result = true;
+        Iterator iter = predicate.iterator();
+        while(iter.hasNext() && result){
+            result = iter.next() instanceof Constant;
+        };
+        return result;
+    }
+}
+</pre>
+</body>
+</html>

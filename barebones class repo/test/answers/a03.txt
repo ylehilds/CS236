@@ -1,0 +1,7 @@
+WhoToBlame('Dilbert',Job)? Yes(1)
+Job = 'EE'
+WhoToBlame(Name,'EE')? Yes(1)
+Name = 'Dilbert'   
+employee(Name,Id,Address,'EE')? Yes(2)
+  Id = '52', Address = '10 Main',   Name = 'Dogbert'
+  Id = '51', Address = '10 Main',   Name = 'Dilbert'
