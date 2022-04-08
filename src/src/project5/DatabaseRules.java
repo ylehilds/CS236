@@ -90,6 +90,6 @@ public class DatabaseRules extends Database {
 			//add anything to the tuples, in other words you exhausted all possibilities of tuples possible in the relations to be 
 			//tested against database. in other words: "The fixed-point algorithm terminates when an iteration of the rule expression set does not 
 			//union a new tuple to any relation in the database."
-		} while (initialRelationshipsTuplesSize != numberOfTuples());
+		} while (initialRelationsTuplesSize != numberOfTuples());
 	}
 }
